@@ -54,6 +54,16 @@ public class Matrix {
         return arr;
     }
 
+    public float[] getDiagonalAsArray() {
+        float[] arr = new float[nCols];
+
+        for (int i = 0; i < nCols; i++) {
+            arr[i] = this.data[i][i];
+        }
+
+        return arr;
+    }
+
     public void swapRow(int R1, int R2) {
         if (R1 >= nRows || R2 >= nRows || R1 == R2) return;
 
@@ -61,16 +71,6 @@ public class Matrix {
             float tmp = data[R1][j];
             data[R1][j] = data[R2][j];
             data[R2][j] = tmp;
-        }
-    }
-
-    public void swapCol(int C1, int C2) {
-        if (C1 >= nCols || C2 >= nCols || C1 == C2) return;
-
-        for (int i = 0; i < nRows; i++) {
-            float tmp = data[i][C1];
-            data[i][C1] = data[i][C2];
-            data[i][C2] = tmp;
         }
     }
 
@@ -88,18 +88,8 @@ public class Matrix {
         }
     }
 
-    public void multiplyColByK(int C1, float k) {
-        for (int i = 0; i < nRows; i++) {
-            data[i][C1] *= k;
-        }
-    }
-
     public void divideRowByK(int R1, float k) {
         multiplyRowByK(R1, (float)1.0/k);
-    }
-
-    public void divideColByK(int C1, float k) {
-        multiplyColByK(C1, (float)1.0/k);
     }
 
     public void subtractRowByArray(int R1, float[] arr) {
