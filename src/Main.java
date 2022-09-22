@@ -1,4 +1,4 @@
-import tubes.matrix.Matrix;
+import tubes.matrix.*;
 
 public class Main {
 
@@ -9,6 +9,6 @@ public class Main {
         matrix.display();
         System.out.println();
 
-        Matrix.gaussianElimination(matrix).display();
+        LinearEquation.gaussianElimination(matrix).display();
     }
 }
