@@ -40,4 +40,34 @@ public class Determinant {
 
         return det;
     }
+
+    public static float cofactor(Matrix matrix) {
+      if(matrix.getNCols() == 2 && matrix.getNRows() == 2) {
+        return matrix.data[0][0]*matrix.data[1][1] - matrix.data[0][1]*matrix.data[1][0];
+      } else {
+        float determinant = 0.0f;
+        for(int k = 0; k < matrix.getNRows(); k++) {
+          Matrix minor = new Matrix(matrix.getNRows() - 1, matrix.getNCols() - 1);
+
+          for(int i = 0; i < k; i++) {
+            for(int j = 1; j < matrix.getNCols(); j++) {
+              minor.data[i][j-1] = matrix.data[i][j]; 
+            }
+          }
+          for(int i = k+1; i < matrix.getNRows(); i++) {
+            for(int j = 1; j < matrix.getNCols(); j++) {
+              minor.data[i-1][j-1] = matrix.data[i][j];
+            }
+          }
+
+          if(k%2 == 0) {
+            determinant += matrix.data[k][0]*cofactor(minor);
+          } else {
+            determinant += -1.0*matrix.data[k][0]*cofactor(minor);
+          }
+        }
+
+        return determinant;
+      }
+    }
 }
