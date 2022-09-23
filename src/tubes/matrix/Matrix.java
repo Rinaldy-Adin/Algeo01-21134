@@ -97,4 +97,22 @@ public class Matrix {
             this.data[R1][i] -= arr[i];
         }
     }
+
+    public static Matrix createIdentityMatrix(int n) {
+        // Pre-condition : Matrix is a square
+        Matrix identity = new Matrix(n, n);
+        int i, j;
+
+        for (i=0; i<identity.nRows; i++) {
+            for (j=0; j<identity.nCols; j++) {
+                if (j == i) {
+                    identity.data[i][j] = 1;
+                }
+                else {
+                    identity.data[i][j] = 0;
+                }
+            }
+        }
+        return identity;
+    }
 }
