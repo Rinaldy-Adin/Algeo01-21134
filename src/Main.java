@@ -10,5 +10,7 @@ public class Main {
         System.out.println();
 
         LinearEquation.gaussianElimination(matrix).display();
+        System.out.println();
+        LinearEquation.gaussJordanElimination(matrix).display();
     }
 }
