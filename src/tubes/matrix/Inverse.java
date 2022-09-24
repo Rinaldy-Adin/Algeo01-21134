@@ -22,8 +22,8 @@ public class Inverse {
             }
 
             if (matrix.data[currentRow][j] != 0) {
-                matrix.divideRowByK(currentRow, matrix.data[currentRow][j]);
                 identity.divideRowByK(currentRow, matrix.data[currentRow][j]);
+                matrix.divideRowByK(currentRow, matrix.data[currentRow][j]);
 
                 for (i = currentRow + 1; i < matrix.nRows; i++) {
                     float[] rowArray = matrix.getRowAsArray(currentRow);
@@ -34,15 +34,12 @@ public class Inverse {
                     }
 
                     matrix.subtractRowByArray(i, rowArray);
-                    identity.subtractRowByArray(i, rowArray);
+                    identity.subtractRowByArray(i, rowIdentity);
                 }
 
                 currentRow++;
             }
         }
-
-        identity.display();
-        System.out.println();
 
         for (i=1; i<matrix.nRows; i++) {
             int colOfPivot = 0;
