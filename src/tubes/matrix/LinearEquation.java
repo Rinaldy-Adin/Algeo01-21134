@@ -30,6 +30,41 @@ public class LinearEquation {
         return matrix;
     }
 
+    public static Matrix gaussJordanElimination(Matrix matrix) {
+        int i, j, k;
+
+        // Forward phase, turn matrix into Echelon form
+        LinearEquation.gaussianElimination(matrix);
+
+        // Pivot = first non-zero element from the left of row
+        // i increments reference row
+        // j increments row to be operated
+        // k traverse through row elements to be added/subtracted with another row
+
+        // Loop through the 2nd row onwards
+        for (i = 1; i < matrix.nRows; i++) {
+            // Find the index of pivot
+            int colOfPivot = 0;
+            while (matrix.data[i][colOfPivot] == 0 && colOfPivot < matrix.nCols) {
+                colOfPivot++;
+            }
+
+            // Check if row didn't contain all zeros (pivot is a non-zero)
+            if (matrix.data[i][colOfPivot] != 0) {
+                // Operate every row above pivot with a non-zero element at the same column as pivot
+                for (j = 0; j < i && matrix.data[j][colOfPivot] != 0; j++) {
+                    float ratio = matrix.data[j][colOfPivot] / matrix.data[i][colOfPivot];
+                    for (k = 0; k < matrix.nCols; k++) {
+                        matrix.data[j][k] -= matrix.data[i][k] * ratio;
+                    }
+                }
+            }
+        }
+
+        matrix.removeNegativeZero();
+        return matrix;
+    }
+
     public static Matrix cramerRule(Matrix matrix) {
       Matrix output = new Matrix(matrix.getNRows(), 1);
       Matrix inputMatrix = new Matrix(matrix.getNRows(), matrix.getNCols() - 1);
