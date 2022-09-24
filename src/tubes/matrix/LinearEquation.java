@@ -102,4 +102,8 @@ public class LinearEquation {
 
         return output;
     }
+
+    public static Matrix solveLinearWithInverse(Matrix coefficient, Matrix constant) {
+        return Matrix.multiplyMatrix(Inverse.gaussJordanInverse(coefficient), constant);
+    }
 }
