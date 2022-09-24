@@ -87,7 +87,7 @@ public class Inverse {
           for(int l = j+1; l < matrix.getNCols(); l++) {
             minor.data[k-1][l-1] = matrix.data[k][l];
           }
-        }z
+        }
 
         if((i+j)%2 == 0) {
           cofactorMatrix.data[i][j] = Determinant.cofactor(minor);
