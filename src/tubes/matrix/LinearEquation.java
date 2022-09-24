@@ -45,7 +45,7 @@ public class LinearEquation {
         for (i=1; i<matrix.nRows; i++) {
             // Find the index of pivot
             int colOfPivot = 0;
-            while (matrix.data[i][colOfPivot] == 0 && colOfPivot < matrix.nCols) {
+            while (colOfPivot < matrix.nCols && matrix.data[i][colOfPivot] == 0) {
                 colOfPivot++;
             }
 
@@ -63,5 +63,9 @@ public class LinearEquation {
 
         matrix.removeNegativeZero();
         return matrix;
+    }
+
+    public static Matrix solveLinearWithInverse (Matrix coefficient, Matrix constant) {
+        return Matrix.multiplyMatrix(Inverse.gaussJordanInverse(coefficient), constant);
     }
 }

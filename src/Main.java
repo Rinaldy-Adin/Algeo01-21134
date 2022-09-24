@@ -2,12 +2,22 @@ import tubes.matrix.*;
 
 public class Main {
     public static void main(String[] args) {
-        float[][] data= {{1,0,3, 9}, {1,0,4, 11}, {0,0,-10, -24}, {2, 7, 6, 9}};
+        float[][] data = {{1,2,3}, {2,5,3}, {1,0,8}};
+        float[][] data2 = {{5}, {3}, {1}};
 
-        Matrix matrix = new Matrix(data);
-        matrix.display();
+        Matrix coef = new Matrix(data);
+        Matrix res = new Matrix(data2);
+        coef.display();
         System.out.println();
-
-        Inverse.gaussJordanInverse(matrix).display();
+        res.display();
+        System.out.println();
+        System.out.println("Inverse of coef: ");
+        Inverse.gaussJordanInverse(coef).display();
+        System.out.println();
+        System.out.println("Multiply coef with res: ");
+        Matrix.multiplyMatrix(coef, res).display();
+        System.out.println();
+        System.out.println("Multiply inverse coef with res: ");
+        LinearEquation.solveLinearWithInverse(coef, res).display();
     }
 }
