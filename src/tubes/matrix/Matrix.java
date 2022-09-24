@@ -97,4 +97,19 @@ public class Matrix {
             this.data[R1][i] -= arr[i];
         }
     }
+
+    public void transpose() {
+      Matrix temp = new Matrix(nRows, nCols);
+      for(int i = 0; i < nRows; i++) {
+        for(int j = 0; j < nCols; j++) {
+          temp.data[i][j] = data[i][j];
+        }
+      }
+
+      for(int i = 0; i < nRows; i++) {
+        for(int j = 0; j < nCols; j++) {
+          data[i][j] = temp.data[j][i];
+        }
+      }
+    }
 }
