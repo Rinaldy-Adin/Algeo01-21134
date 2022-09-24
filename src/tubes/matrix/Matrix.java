@@ -103,12 +103,11 @@ public class Matrix {
         Matrix identity = new Matrix(n, n);
         int i, j;
 
-        for (i=0; i<identity.nRows; i++) {
-            for (j=0; j<identity.nCols; j++) {
+        for (i = 0; i < identity.nRows; i++) {
+            for (j = 0; j < identity.nCols; j++) {
                 if (j == i) {
                     identity.data[i][j] = 1;
-                }
-                else {
+                } else {
                     identity.data[i][j] = 0;
                 }
             }
@@ -136,5 +135,19 @@ public class Matrix {
             }
         }
         return m;
+
+    public void transpose() {
+      Matrix temp = new Matrix(nRows, nCols);
+      for(int i = 0; i < nRows; i++) {
+        for(int j = 0; j < nCols; j++) {
+          temp.data[i][j] = data[i][j];
+        }
+      }
+
+      for(int i = 0; i < nRows; i++) {
+        for(int j = 0; j < nCols; j++) {
+          data[i][j] = temp.data[j][i];
+        }
+      }
     }
 }

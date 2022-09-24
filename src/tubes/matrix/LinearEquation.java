@@ -42,7 +42,7 @@ public class LinearEquation {
         // k traverse through row elements to be added/subtracted with another row
 
         // Loop through the 2nd row onwards
-        for (i=1; i<matrix.nRows; i++) {
+        for (i = 1; i < matrix.nRows; i++) {
             // Find the index of pivot
             int colOfPivot = 0;
             while (colOfPivot < matrix.nCols && matrix.data[i][colOfPivot] == 0) {
@@ -52,10 +52,10 @@ public class LinearEquation {
             // Check if row didn't contain all zeros (pivot is a non-zero)
             if (matrix.data[i][colOfPivot] != 0) {
                 // Operate every row above pivot with a non-zero element at the same column as pivot
-                for (j=0; j<i && matrix.data[j][colOfPivot] != 0; j++) {
-                    float ratio = matrix.data[j][colOfPivot]/matrix.data[i][colOfPivot];
-                    for (k=0; k<matrix.nCols; k++) {
-                        matrix.data[j][k] -= matrix.data[i][k]*ratio;
+                for (j = 0; j < i && matrix.data[j][colOfPivot] != 0; j++) {
+                    float ratio = matrix.data[j][colOfPivot] / matrix.data[i][colOfPivot];
+                    for (k = 0; k < matrix.nCols; k++) {
+                        matrix.data[j][k] -= matrix.data[i][k] * ratio;
                     }
                 }
             }
@@ -65,7 +65,46 @@ public class LinearEquation {
         return matrix;
     }
 
+<<<<<<< HEAD
     public static Matrix solveLinearWithInverse (Matrix coefficient, Matrix constant) {
         return Matrix.multiplyMatrix(Inverse.gaussJordanInverse(coefficient), constant);
+=======
+    public static Matrix cramerRule(Matrix matrix) {
+      Matrix output = new Matrix(matrix.getNRows(), 1);
+      Matrix inputMatrix = new Matrix(matrix.getNRows(), matrix.getNCols() - 1);
+
+      // Kasus kalo matriksnya bukan matriks persegi
+      if(matrix.getNCols() - 1 != matrix.getNRows()) {
+        for(int i = 0; i < output.getNRows(); i++) {
+          output.data[i][0] = 0.0f;
+        }
+        return output;
+      }
+
+      for(int i = 0; i < inputMatrix.getNRows(); i++) {
+        for(int j = 0; j < inputMatrix.getNCols(); j++) {
+          inputMatrix.data[i][j] = matrix.data[i][j];
+        }
+      }
+      float determinant = Determinant.rowReduction(inputMatrix);
+
+      for(int k = 0; k < output.getNRows(); k++) {
+        Matrix cramerMatrix = new Matrix(matrix.getNRows(), matrix.getNCols() - 1);
+
+        for(int i = 0; i < cramerMatrix.getNRows(); i++) {
+          for(int j = 0; j < cramerMatrix.getNCols(); j++) {
+            if(j == k) {
+              cramerMatrix.data[i][j] = matrix.data[i][matrix.getNCols()-1];
+            } else {
+              cramerMatrix.data[i][j] = matrix.data[i][j];
+            }
+          }
+        }
+        float kDeterminant = Determinant.rowReduction(cramerMatrix);
+        output.data[k][0] = kDeterminant / determinant;
+      }
+
+      return output;
+>>>>>>> 5df8a9b06a583510959aac6ead7a9a22b5e45af1
     }
 }
