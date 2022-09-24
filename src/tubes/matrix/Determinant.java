@@ -17,8 +17,10 @@ public class Determinant {
 
 
             if (matrix.data[currentRow][j] != 0) {
+                det *= matrix.data[currentRow][j];
+                matrix.display();
+                System.out.println();
                 matrix.divideRowByK(currentRow, matrix.data[currentRow][j]);
-                det /= matrix.data[currentRow][j];
 
                 for (int i = currentRow + 1; i < matrix.nRows; i++) {
                     float[] rowArray = matrix.getRowAsArray(currentRow);
