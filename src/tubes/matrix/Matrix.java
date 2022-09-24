@@ -89,7 +89,7 @@ public class Matrix {
     }
 
     public void divideRowByK(int R1, float k) {
-        multiplyRowByK(R1, (float)1.0/k);
+        multiplyRowByK(R1, (float) 1.0 / k);
     }
 
     public void subtractRowByArray(int R1, float[] arr) {
@@ -115,18 +115,41 @@ public class Matrix {
         return identity;
     }
 
-    public void transpose() {
-      Matrix temp = new Matrix(nRows, nCols);
-      for(int i = 0; i < nRows; i++) {
-        for(int j = 0; j < nCols; j++) {
-          temp.data[i][j] = data[i][j];
-        }
-      }
 
-      for(int i = 0; i < nRows; i++) {
-        for(int j = 0; j < nCols; j++) {
-          data[i][j] = temp.data[j][i];
+    public void transpose() {
+        Matrix temp = new Matrix(nRows, nCols);
+        for (int i = 0; i < nRows; i++) {
+            for (int j = 0; j < nCols; j++) {
+                temp.data[i][j] = data[i][j];
+            }
         }
-      }
+
+        for (int i = 0; i < nRows; i++) {
+            for (int j = 0; j < nCols; j++) {
+                data[i][j] = temp.data[j][i];
+            }
+        }
+    }
+
+    public static Matrix copyMatrix(Matrix matrix) {
+        Matrix tempCopy = new Matrix(matrix.nRows, matrix.nCols);
+        for (int i = 0; i < matrix.nRows; i++) {
+            tempCopy.data[i] = matrix.data[i].clone();
+        }
+        return tempCopy;
+    }
+
+    public static Matrix multiplyMatrix(Matrix m1, Matrix m2) {
+        int i, j, k;
+        Matrix m = new Matrix(m1.nRows, m2.nCols);
+
+        for (i = 0; i < m1.nRows; i++) {
+            for (j = 0; j < m2.nCols; j++) {
+                for (k = 0; k < m2.nRows; k++) {
+                    m.data[i][j] += m1.data[i][k] * m2.data[k][j];
+                }
+            }
+        }
+        return m;
     }
 }
