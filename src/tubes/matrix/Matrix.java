@@ -64,6 +64,18 @@ public class Matrix {
         return arr;
     }
 
+    public float[] getMatrixAsOneDimensionalArray() {
+        float[] arr = new float[nCols * nRows];
+
+        for (int i = 0; i < nRows; i++) {
+            for (int j = 0; j < nCols; j++) {
+                arr[i * nCols + j] = this.data[i][j];
+            }
+        }
+
+        return arr;
+    }
+
     public void swapRow(int R1, int R2) {
         if (R1 >= nRows || R2 >= nRows || R1 == R2) return;
 
