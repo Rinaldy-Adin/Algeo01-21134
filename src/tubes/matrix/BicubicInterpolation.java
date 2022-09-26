@@ -24,9 +24,9 @@ public class BicubicInterpolation {
 
     public static Matrix solveCoefficient(Matrix values) {
         float[] valuesArray = values.getMatrixAsOneDimensionalArray();
-        Matrix valuesMatrixOneRow = new Matrix(1, 16);
+        Matrix valuesMatrixOneRow = new Matrix(16, 1);
         for (int i = 0; i < 16; i++) {
-            valuesMatrixOneRow.data[0][i] = valuesArray[i];
+            valuesMatrixOneRow.data[i][0] = valuesArray[i];
         }
 
         Matrix inverseVariables = Inverse.gaussJordanInverse(generateVariablesMatrix());
@@ -35,7 +35,7 @@ public class BicubicInterpolation {
         Matrix coefMatrix = new Matrix(4, 4);
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                coefMatrix.data[i][j] = coefMatrixOneRow.data[0][j + i * 4];
+                coefMatrix.data[i][j] = coefMatrixOneRow.data[j + i * 4][0];
             }
         }
 
