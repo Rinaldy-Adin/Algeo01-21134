@@ -82,7 +82,7 @@ public class LinearEquation {
                 inputMatrix.data[i][j] = matrix.data[i][j];
             }
         }
-        float determinant = Determinant.rowReduction(inputMatrix);
+        float determinant = Determinant.cofactor(inputMatrix);
 
         for (int k = 0; k < output.getNRows(); k++) {
             Matrix cramerMatrix = new Matrix(matrix.getNRows(), matrix.getNCols() - 1);
@@ -96,7 +96,7 @@ public class LinearEquation {
                     }
                 }
             }
-            float kDeterminant = Determinant.rowReduction(cramerMatrix);
+            float kDeterminant = Determinant.cofactor(cramerMatrix);
             output.data[k][0] = kDeterminant / determinant;
         }
 
