@@ -45,9 +45,9 @@ public class Matrix {
     }
 
     public float[] getColAsArray(int C1) {
-        float[] arr = new float[nCols];
+        float[] arr = new float[nRows];
 
-        for (int i = 0; i < nCols; i++) {
+        for (int i = 0; i < nRows; i++) {
             arr[i] = this.data[i][C1];
         }
 
@@ -152,4 +152,24 @@ public class Matrix {
         }
         return m;
     }
+
+    public static Matrix makeAugmented (Matrix a, Matrix b) {
+        // Pre-condition : a.nRows == b.nRows
+        Matrix aug = new Matrix(a.nRows, a.nCols+b.nCols);
+        int i, j;
+
+        for (i=0; i<aug.nRows; i++) {
+            for (j=0; j<aug.nCols; j++) {
+                if (j<a.nCols) {
+                    aug.data[i][j] = a.data[i][j];
+                }
+                else {
+                    aug.data[i][j] = b.data[i][j-a.nCols];
+                }
+            }
+        }
+
+        return aug;
+    }
+    
 }
