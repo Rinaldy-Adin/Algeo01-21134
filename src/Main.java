@@ -1,13 +1,40 @@
+import java.util.Scanner;
+
 import tubes.matrix.*;
 
 public class Main {
     public static void main(String[] args) {
-        float[][] data= {{1,0,3, 9}, {1,0,4, 11}, {0,0,-10, -24}, {2, 7, 6, 9}};
+        Scanner scan = new Scanner(System.in);
 
-        Matrix matrix = new Matrix(data);
-        matrix.display();
-        System.out.println();
+        System.out.println("MENU");
+        System.out.println("1. Sistem Persamaan Linier");
+        System.out.println("2. Determinan");
+        System.out.println("3. Matriks balikan");
+        System.out.println("4. Interpolasi polinom");
+        System.out.println("5. Interpolasi bicubic");
+        System.out.println("6. Regresi linier berganda");
+        System.out.println("7. Keluar");
 
-        Inverse.gaussJordanInverse(matrix).display();
+        boolean isActive = true;
+        while(isActive) {
+          int input = scan.nextInt();
+          if(input == 1) {
+            // SPL
+          } else if(input == 2) {
+            // Determinan
+          } else if(input == 3) {
+            // Inverse
+          } else if(input == 4) {
+            // Interpolasi polinom
+          } else if(input == 5) {
+            // Interpolasi bicubic
+          } else if(input == 6) {
+            // Regresi
+          } else if(input == 7) {
+            isActive = false;
+          }
+        }
+
+        scan.close();
     }
 }
