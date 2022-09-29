@@ -33,9 +33,6 @@ public class LinearEquation {
     }
 
     public static String[] solveRowEchelon(Matrix matrix) {
-        matrix.display();
-        System.out.println();
-
         float[][] coefs = new float[matrix.nCols - 1][27];
         String[] res = new String[matrix.nCols - 1];
 
@@ -112,10 +109,10 @@ public class LinearEquation {
         return res;
     }
 
-//    public static float[] solveGaussJordan(Matrix matrix) {
-//        Matrix rowEchelon = gaussianElimination(matrix);
-//        return solveRowEchelon(rowEchelon);
-//    }
+    public static String[] solveGauss(Matrix matrix) {
+        Matrix rowEchelon = gaussianElimination(matrix);
+        return solveRowEchelon(rowEchelon);
+    }
 
     public static Matrix gaussJordanElimination(Matrix matrix) {
         int i, j, k;
@@ -150,6 +147,56 @@ public class LinearEquation {
 
         matrix.removeNegativeZero();
         return matrix;
+    }
+
+    public static String[] solveReducedRowEchelon(Matrix matrix) {
+        String[] res = new String[matrix.nCols - 1];
+        Arrays.fill(res, "");
+
+        for (int i = 0; i < matrix.nRows; i++) {
+            int pivot = 0;
+            while (pivot < matrix.nCols - 1 && matrix.data[i][pivot] != 1) {
+                pivot++;
+            }
+
+            if (matrix.data[i][matrix.nCols - 1] != 0) res[pivot] += matrix.data[i][matrix.nCols - 1];
+
+            for (int j = pivot + 1; j < matrix.nCols - 1; j++) {
+                if (matrix.data[i][j] == 0) continue;
+
+                if (res[pivot].equals("")) {
+                    if (matrix.data[i][j] > 0) {
+                        res[pivot] += "-";
+                    }
+                } else {
+                    if (matrix.data[i][j] < 0) {
+                        res[pivot] += " + ";
+                    } else {
+                        res[pivot] += " - ";
+                    }
+                }
+
+                if (Math.abs(matrix.data[i][j]) != 1) res[pivot] += Math.abs(matrix.data[i][j]);
+                char var = 'a';
+                var += j;
+                res[pivot] += var;
+            }
+        }
+
+        for (int i = 0; i < matrix.nCols - 1; i++) {
+            if (res[i].equals("")) {
+                char var = 'a';
+                var += i;
+                res[i] += var;
+            }
+        }
+
+        return res;
+    }
+
+    public static String[] solveGaussJordan(Matrix matrix) {
+        Matrix reducedRowEchelon = gaussJordanElimination(matrix);
+        return solveRowEchelon(reducedRowEchelon);
     }
 
     public static Matrix cramerRule(Matrix matrix) {
