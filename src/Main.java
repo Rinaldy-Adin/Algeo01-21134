@@ -19,6 +19,7 @@ public class Main {
           System.out.println("7. Keluar");
 
           int input = scan.nextInt();
+
           if(input == 1) {
             // SPL
             Matrix tempMtx;
@@ -100,6 +101,7 @@ public class Main {
             }
 
           } else if(input == 2) {
+            // Determinan
             System.out.println("1. Metode reduksi baris");
             System.out.println("2. Metode kofaktor");
             int inputSub = scan.nextInt();
@@ -110,7 +112,7 @@ public class Main {
 
             Matrix matrix;
             if(inputMethod == 1) {
-              System.out.print("Ukuran matrix: ");
+              System.out.print("Input ukuran matrix n*n: ");
               int n = scan.nextInt();
               System.out.println("Masukkan matrix: ");
 
@@ -146,9 +148,51 @@ public class Main {
 
             Util.writeToFile(folder, fileName, outputString);
             System.out.println(outputString);
+            
           } else if(input == 3) {
             // Inverse
+            System.out.println("1. Metode Gauss-Jordan");
+            System.out.println("2. Metode Adjoin");
+
+            int inputSub = scan.nextInt();
+
+            System.out.println("1. Masukkan melalui keyboard");
+            System.out.println("2. Masukkan melalui file");
+            int inputMethod = scan.nextInt();
+
+            Matrix matrix;
+            if (inputMethod == 1) {
+              System.out.print("Input ukuran matrix n*n: ");
+              int n = scan.nextInt();
+              System.out.println("Masukkan matrix: ");
+              matrix = new Matrix(n, n);
+              for(int i = 0; i < matrix.getNRows(); i++) {
+                for(int j = 0; j < matrix.getNCols(); j++) {
+                  matrix.data[i][j] = scan.nextFloat();
+                }
+              }
+              scan.nextLine();
+            } 
+            else if (inputMethod == 2) {
+              System.out.print("Lokasi file masukkan: ");
+              scan.nextLine();
+              String pathString = scan.nextLine();
+
+              float[][] data = Util.readFromFile(pathString);
+              matrix = new Matrix(data);
+            } else {
+              matrix = new Matrix(0, 0);
+            }
+
+            if (inputSub == 1) {
+              Inverse.gaussJordanInverse(matrix).display();
+            }
+            else if (inputSub == 2) {
+              Inverse.adjoinMethod(matrix).display();
+            }
+
           } else if(input == 4) {
+            // Interpolasi Polinom
             System.out.println("1. Masukkan melalui keyboard");
             System.out.println("2. Masukkan melalui file");
             int inputMethod = scan.nextInt();
@@ -211,9 +255,12 @@ public class Main {
             System.out.println(outputString);
           } else if(input == 5) {
             // Interpolasi bicubic
+
           } else if(input == 6) {
-            // Regresi
+            // Regresi Linear Berganda
+            
           } else if(input == 7) {
+            // Keluar
             isActive = false;
           }
         }
