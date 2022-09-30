@@ -99,10 +99,10 @@ public class Inverse {
         }
 
         float mul = 1 / Determinant.cofactor(matrix);
-        cofactorMatrix.transpose();
-        for (int i = 0; i < cofactorMatrix.getNRows(); i++) {
-            cofactorMatrix.multiplyRowByK(i, mul);
+        Matrix transposeCofactor = Matrix.transpose(cofactorMatrix);
+        for (int i = 0; i < transposeCofactor.getNRows(); i++) {
+            transposeCofactor.multiplyRowByK(i, mul);
         }
-        return cofactorMatrix;
+        return transposeCofactor;
     }
 }

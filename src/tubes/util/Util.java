@@ -41,7 +41,6 @@ public class Util {
           rows++;
         }
       }
-      rows++;
       cols++;
       cols /= rows;
 
