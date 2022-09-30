@@ -44,7 +44,7 @@ public class Inverse {
 
         for (i = 1; i < tempCopy.nRows; i++) {
             int colOfPivot = 0;
-            while (colOfPivot < tempCopy.nCols && tempCopy.data[i][colOfPivot] == 0) {
+            while (colOfPivot < tempCopy.nCols-1 && tempCopy.data[i][colOfPivot] == 0) {
                 colOfPivot++;
             }
 

@@ -129,7 +129,7 @@ public class LinearEquation {
         for (i = 1; i < matrix.nRows; i++) {
             // Find the index of pivot
             int colOfPivot = 0;
-            while (colOfPivot < matrix.nCols && matrix.data[i][colOfPivot] == 0) {
+            while (colOfPivot < matrix.nCols-1 && matrix.data[i][colOfPivot] == 0) {
                 colOfPivot++;
             }
 
