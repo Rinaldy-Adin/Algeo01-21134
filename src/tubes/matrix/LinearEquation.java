@@ -200,6 +200,9 @@ public class LinearEquation {
     }
 
     public static Matrix cramerRule(Matrix matrix) {
+      // Solve the system of linear equation by using cramer rule and
+      // outputs the solutions in a column matrix
+
         Matrix output = new Matrix(matrix.getNRows(), 1);
         Matrix inputMatrix = new Matrix(matrix.getNRows(), matrix.getNCols() - 1);
 

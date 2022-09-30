@@ -1,6 +1,5 @@
 package tubes.util;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -24,6 +23,9 @@ public class Util {
     }
 
     public static float[][] readFromFile(String pathString) {
+      // Read data from a txt file and outputs it as a matrix
+      // (The txt file must ends with newline character)
+
       Path file = Path.of(pathString);
       String matrixString = "";
       try {
@@ -33,16 +35,19 @@ public class Util {
       }
 
       int rows = 0, cols = 0;
+      int currentCols = 0;
       for(int i = 0; i < matrixString.length(); i++) {
         if(matrixString.charAt(i) == ' ') {
-          cols++;
+          currentCols++;
         } else if(matrixString.charAt(i) == '\n') {
-          cols++;
+          currentCols++;
           rows++;
+          if(currentCols > cols) {
+            cols = currentCols;
+          }
+          currentCols = 0;
         }
       }
-      cols++;
-      cols /= rows;
 
       float[][] data = new float[rows][cols];
       String dataStr = "";
@@ -66,6 +71,9 @@ public class Util {
     }
 
     public static void writeToFile(String folderPath, String fileName, String outputString) {
+      // Write a string into a new txt file
+      // (There must be no file with the same name in the new file location)
+
       try {
         Path file = Files.createFile(Path.of(folderPath).resolve(fileName));
         Files.writeString(file, outputString);

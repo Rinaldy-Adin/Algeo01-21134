@@ -128,6 +128,8 @@ public class Matrix {
     }
 
     public static Matrix transpose(Matrix matrix) {
+      // Transpose the input matrix and outputs it as a new matrix
+
         Matrix transposeMatrix = new Matrix(matrix.getNCols(), matrix.getNRows());
         for (int i = 0; i < transposeMatrix.getNRows(); i++) {
             for (int j = 0; j < transposeMatrix.getNCols(); j++) {

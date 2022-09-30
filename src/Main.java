@@ -216,7 +216,6 @@ public class Main {
 
               float[][] data = Util.readFromFile(pathString);
               points = new Matrix(data);
-
             } else {
               points = new Matrix(0, 0);
             }
@@ -254,11 +253,37 @@ public class Main {
             Util.writeToFile(folder, fileName, outputString);
             System.out.println(outputString);
           } else if(input == 5) {
-            // Interpolasi bicubic
+            // Bicubic Interpolation
+            System.out.print("Lokasi file masukkan: ");
+            scan.nextLine();
+            String pathString = scan.nextLine();
 
+            float[][] data = Util.readFromFile(pathString);
+            Matrix temp = new Matrix(data);
+
+            Matrix matrix = new Matrix(temp.getNRows()-1, temp.getNCols());
+            for(int i = 0; i < temp.getNRows()-1; i++) {
+              for(int j = 0; j < temp.getNCols(); j++) {
+                matrix.data[i][j] = temp.data[i][j];
+              }
+            }
+
+            float x = temp.data[temp.getNRows()-1][0];
+            float y = temp.data[temp.getNRows()-1][1];
+
+            float val = BicubicInterpolation.interpolate(matrix, x, y);
+            String outputString = "f(" + x + ", " + y + ") = " + val;
+            
+            System.out.print("Lokasi folder output: ");
+            String folder = scan.nextLine();
+            System.out.print("Nama file: ");
+            String fileName = scan.nextLine();
+
+            Util.writeToFile(folder, fileName, outputString);
+            System.out.println(outputString);
           } else if(input == 6) {
             // Regresi Linear Berganda
-            
+
           } else if(input == 7) {
             // Keluar
             isActive = false;

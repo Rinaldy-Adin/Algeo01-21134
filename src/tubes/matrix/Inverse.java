@@ -65,6 +65,8 @@ public class Inverse {
     }
 
     public static Matrix adjoinMethod(Matrix matrix) {
+      // Compute the inverse of an invertible matrix using adjoin method
+
         Matrix cofactorMatrix = new Matrix(matrix.getNRows(), matrix.getNCols());
         for (int i = 0; i < matrix.getNRows(); i++) {
             for (int j = 0; j < matrix.getNCols(); j++) {
