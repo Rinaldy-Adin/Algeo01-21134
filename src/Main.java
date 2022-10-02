@@ -258,6 +258,82 @@ public class Main {
 
           } else if(input == 6) {
             // Regresi Linear Berganda
+            System.out.println("1. Masukkan melalui keyboard");
+            System.out.println("2. Masukkan melalui file");
+            int inputMethod = scan.nextInt();
+
+            Matrix x;
+            Matrix y;
+            Matrix k;
+
+            if (inputMethod == 1) {
+              System.out.println("Masukkan jumlah peubah x: ");
+              int n = scan.nextInt();
+              System.out.println("Masukkan jumlah sampel: ");
+              int m = scan.nextInt();
+
+              x = new Matrix(n, m);
+              y = new Matrix(m, 1);
+              k = new Matrix(n, m);
+
+              System.out.println("Masukkan matriks X dengan format sebagai berikut: ");
+              System.out.println("[ [X1_1, X2_1, ... Xn_1]");
+              System.out.println("  [X1_2, X2_2, ... Xn_2]");
+              System.out.println("   ...   ...   ...  ...");
+              System.out.println("  [X1_m, X2_m, ... Xn_m] ]");
+              System.out.println();
+
+              int i;
+              int j;
+
+              for (i=0; i<x.getNRows(); i++) {
+                for (j=0; j<x.getNCols(); j++) {
+                  x.data[i][j] = scan.nextFloat();
+                }
+              }
+
+              System.out.println("Masukkan matriks Y dengan format sebagai berikut: ");
+              System.out.println("[ [Y1]");
+              System.out.println("  [Y2]");
+              System.out.println("  ...");
+              System.out.println("  [Ym] ]");
+              System.out.println();
+
+              for (i=0; i<y.getNRows(); i++) {
+                for (j=0; j<y.getNCols(); j++) {
+                  y.data[i][j] = scan.nextFloat();
+                }
+              }
+
+              System.out.println("Masukkan matriks Y dengan format sebagai berikut: ");
+              System.out.println("[[X1, X2, ... Xn]]");
+              System.out.println();
+
+              for (i=0; i<k.getNCols; i++) {
+                k.data[0][i] = scan.nextFloat();
+              }
+
+              else if(inputMethod == 2) {
+                System.out.print("Lokasi file masukkan x: ");
+                scan.nextLine();
+                String pathString = scan.nextLine();
+                
+                float[][] data = Util.readFromFile(pathString);
+                x = new Matrix(data);
+              }
+              else {
+                x = new Matrix(0, 0);
+              }
+
+              // Transpose x
+              // Matrix.transpose(x);
+              System.out.println("Persamaan regresi: ");
+              LinearRegression.writeMLREquation(x, y);
+              System.out.println();
+              System.out.println("Hasil taksiran Xk: ");
+              System.out.println(LinearRegression.approxMLR(x, y, k));
+            }
+            
             
           } else if(input == 7) {
             // Keluar

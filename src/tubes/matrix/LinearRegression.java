@@ -134,7 +134,7 @@ public class LinearRegression {
         float[] solution = aug.getColAsArray(aug.nCols-1);
         float sumY = solution[0];
         for (int i=1; i<solution.length; i++) {
-            sumY += solution[i]*k.data[i-1][0];
+            sumY += solution[i]*k.data[0][i-1];
         }
         return sumY;
     }
