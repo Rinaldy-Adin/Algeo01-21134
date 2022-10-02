@@ -334,30 +334,30 @@ public class Main {
               System.out.println("[[X1, X2, ... Xn]]");
               System.out.println();
 
-              for (i=0; i<k.getNCols; i++) {
+              for (i=0; i<k.getNCols(); i++) {
                 k.data[0][i] = scan.nextFloat();
               }
-
-              else if(inputMethod == 2) {
-                System.out.print("Lokasi file masukkan x: ");
-                scan.nextLine();
-                String pathString = scan.nextLine();
-                
-                float[][] data = Util.readFromFile(pathString);
-                x = new Matrix(data);
-              }
-              else {
-                x = new Matrix(0, 0);
-              }
-
-              // Transpose x
-              // Matrix.transpose(x);
-              System.out.println("Persamaan regresi: ");
-              LinearRegression.writeMLREquation(x, y);
-              System.out.println();
-              System.out.println("Hasil taksiran Xk: ");
-              System.out.println(LinearRegression.approxMLR(x, y, k));
             }
+            else if(inputMethod == 2) {
+              System.out.print("Lokasi file masukan: ");
+              scan.nextLine();
+              String pathString = scan.nextLine();
+              
+              
+              float[][] data = Util.readFromFile(pathString);
+              x = new Matrix(data);
+            }
+            else {
+              x = new Matrix(0, 0);
+            }
+
+            // Transpose x such that it follows the formatting in LinearRegression class
+            Matrix.transpose(x);
+            System.out.println("Persamaan regresi: ");
+            LinearRegression.writeMLREquation(x, y);
+            System.out.println();
+            System.out.println("Hasil taksiran Xk: ");
+            System.out.println(LinearRegression.approxMLR(x, y, k));
             
             
 
