@@ -44,6 +44,8 @@ public class Determinant {
     }
 
     public static float cofactor(Matrix matrix) {
+      // Compute the determinant of a matrix using cofactor expansion method
+
       if(matrix.getNCols() == 2 && matrix.getNRows() == 2) {
         return matrix.data[0][0]*matrix.data[1][1] - matrix.data[0][1]*matrix.data[1][0];
       } else {

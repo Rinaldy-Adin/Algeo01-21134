@@ -127,20 +127,16 @@ public class Matrix {
         return identity;
     }
 
+    public static Matrix transpose(Matrix matrix) {
+      // Transpose the input matrix and outputs it as a new matrix
 
-    public void transpose() {
-        Matrix temp = new Matrix(nRows, nCols);
-        for (int i = 0; i < nRows; i++) {
-            for (int j = 0; j < nCols; j++) {
-                temp.data[i][j] = data[i][j];
+        Matrix transposeMatrix = new Matrix(matrix.getNCols(), matrix.getNRows());
+        for (int i = 0; i < transposeMatrix.getNRows(); i++) {
+            for (int j = 0; j < transposeMatrix.getNCols(); j++) {
+                transposeMatrix.data[i][j] = matrix.data[j][i];
             }
         }
-
-        for (int i = 0; i < nRows; i++) {
-            for (int j = 0; j < nCols; j++) {
-                data[i][j] = temp.data[j][i];
-            }
-        }
+        return transposeMatrix;
     }
 
     public static Matrix copyMatrix(Matrix matrix) {
