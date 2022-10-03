@@ -319,7 +319,7 @@ public class Main {
 
               x = new Matrix(n, m);
               y = new Matrix(m, 1);
-              k = new Matrix(n, m);
+              k = new Matrix(1, n);
 
               System.out.println("Masukkan matriks X dengan format sebagai berikut: ");
               System.out.println("[ [X1_1, X2_1, ... Xn_1]");
@@ -350,8 +350,8 @@ public class Main {
                 }
               }
 
-              System.out.println("Masukkan matriks Y dengan format sebagai berikut: ");
-              System.out.println("[[X1, X2, ... Xn]]");
+              System.out.println("Masukkan nilai yang akan ditaksir dengan format sebagai berikut: ");
+              System.out.println("[[X1, X2, ... Xk]]");
               System.out.println();
 
               for (i=0; i<k.getNCols(); i++) {
@@ -391,12 +391,12 @@ public class Main {
             }
 
             // Transpose x such that it follows the formatting in LinearRegression class
-            Matrix.transpose(x);
+            Matrix transX = Matrix.transpose(x);
             System.out.println("Persamaan regresi: ");
-            LinearRegression.writeMLREquation(x, y);
+            LinearRegression.writeMLREquation(transX, y);
             System.out.println();
             System.out.println("Hasil taksiran Xk: ");
-            System.out.println(LinearRegression.approxMLR(x, y, k));
+            System.out.println(LinearRegression.approxMLR(transX, y, k));
 
 
           } else if(input == 7) {

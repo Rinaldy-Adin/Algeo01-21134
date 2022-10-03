@@ -89,8 +89,7 @@ public class LinearRegression {
     public static Matrix multipleLinearReg (Matrix x, Matrix y) {
         // Solve for b with Gauss-Jordan Elimination
         Matrix aug = new Matrix (Matrix.makeAugmented(LinearRegression.getMtxA(x), LinearRegression.getMtxH(x, y)).data.clone());
-        LinearEquation.gaussJordanElimination(aug);
-        return aug;
+        return LinearEquation.gaussJordanElimination(aug);
     }
 
     public static void writeMLREquation (Matrix x, Matrix y) {
