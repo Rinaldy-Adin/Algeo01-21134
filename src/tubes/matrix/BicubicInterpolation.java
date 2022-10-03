@@ -7,63 +7,86 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class BicubicInterpolation {
-    private static Matrix generateVariablesMatrix() {
-        Matrix matrix = new Matrix(16, 16);
+  private static Matrix generateVariablesMatrix() {
+    Matrix matrix = new Matrix(16, 16);
 
-        for (int y = -1; y <= 2; y++) {
-            for (int x = -1; x <= 2; x++) {
-                int row = (x + 1) + (y + 1) * 4;
+    for (int y = -1; y <= 2; y++) {
+        for (int x = -1; x <= 2; x++) {
+            int row = (x + 1) + (y + 1) * 4;
 
+            for (int j = 0; j < 4; j++) {
                 for (int i = 0; i < 4; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        int col = j + i * 4;
-                        matrix.data[row][col] = (float) (Math.pow(x, i) * Math.pow(y, j));
-                    }
+                    int col = i + j * 4;
+                    matrix.data[row][col] = (float) (Math.pow(x, i) * Math.pow(y, j));
                 }
             }
         }
-
-        return matrix;
     }
 
-    public static Matrix solveCoefficient(Matrix values) {
-        float[] valuesArray = values.getMatrixAsOneDimensionalArray();
-        Matrix valuesMatrixOneRow = new Matrix(16, 1);
-        for (int i = 0; i < 16; i++) {
-            valuesMatrixOneRow.data[i][0] = valuesArray[i];
+    return matrix;
+}
+
+public static Matrix solveCoefficient(Matrix values) {
+    Matrix valuesMatrixOneCol = new Matrix(16, 1);
+    for (int y = -1; y <= 2; y++) {
+        for (int x = -1; x <= 2; x++) {
+            valuesMatrixOneCol.data[(x + 1) + (y + 1) * 4][0] = values.data[x + 1][y + 1];
         }
+    }
 
-        Matrix inverseVariables = Inverse.gaussJordanInverse(generateVariablesMatrix());
-        Matrix coefMatrixOneRow = Matrix.multiplyMatrix(inverseVariables, valuesMatrixOneRow);
+    Matrix inverseVariables = Inverse.gaussJordanInverse(generateVariablesMatrix());
+    Matrix coefMatrixOneCol = Matrix.multiplyMatrix(inverseVariables, valuesMatrixOneCol);
 
-        Matrix coefMatrix = new Matrix(4, 4);
+    Matrix coefMatrix = new Matrix(4, 4);
+    for (int j = 0; j < 4; j++) {
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                coefMatrix.data[i][j] = coefMatrixOneRow.data[j + i * 4][0];
-            }
+            coefMatrix.data[i][j] = coefMatrixOneCol.data[i + j * 4][0];
         }
-
-        return coefMatrix;
     }
 
-    public static float interpolate(Matrix values, float x, float y) {
-        if (x < 0 || x > 1 || y < 0 || y > 1) {
-            return Float.NaN;
+    return coefMatrix;
+}
+
+public static double interpolate(Matrix values, double x, double y) {
+    if (x < 0 || x > 1 || y < 0 || y > 1) {
+        return Double.NaN;
+    }
+
+    Matrix diff = new Matrix(16, 17);
+    Matrix vars = generateVariablesMatrix();
+    for (int i = 0; i < 16; i++) {
+        for (int j = 0; j < 16; j++) {
+            diff.data[i][j] = vars.data[i][j];
         }
+    }
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            diff.data[j + i * 4][16] = values.data[i][j];
+        }
+    }
 
-        Matrix coefficient = solveCoefficient(values);
+    Matrix res = LinearEquation.gaussJordanElimination(diff);
 
-        float result = 0;
+    float[] col = res.getColAsArray(16);
+    Matrix coefficient = new Matrix(4, 4);
+    for (int j = 0; j < 4; j++) {
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                result += coefficient.data[i][j] * Math.pow(x, i) * Math.pow(y, j);
-            }
+            coefficient.data[i][j] = col[i + j * 4];
+//                System.out.printf("a%d%d: %f\n", i, j, coefficient.data[i][j]);
         }
-
-        return result;
     }
 
-    public static void scaleImage(String inputPath, String outputFileName) {
+
+    double result = 0;
+    for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < 4; i++) {
+            result += coefficient.data[i][j] * Math.pow(x, i) * Math.pow(y, j);
+//                System.out.printf("%f + %f ^ %d + %f ^ %d\n", coefficient.data[i][j], x, i, y, j);
+        }
+    }
+
+    return result;
+}    public static void scaleImage(String inputPath, String outputFileName) {
       try {
         BufferedImage test = ImageIO.read(new File(inputPath));
         BufferedImage image = new BufferedImage(4, 4, test.getType());
@@ -139,7 +162,7 @@ public class BicubicInterpolation {
               float[][] dataRed = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getRed()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getRed()}};
               float[][] dataGreen = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getGreen()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getGreen()}};
               float[][] dataBlue = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getBlue()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getBlue()}};
-              float[][] dataAlpha = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getBlue()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getBlue()}};
+              float[][] dataAlpha = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getAlpha()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getAlpha()}};
 
               Matrix pointsRed = new Matrix(dataRed);
               Matrix pointsGreen = new Matrix(dataGreen);
@@ -152,6 +175,11 @@ public class BicubicInterpolation {
               int approxAlpha = (int) Interpolation.approximateFunction(pointsAlpha, 0.25f*((j-1)%2 + 1));
 
               int approxRGB = (approxAlpha << 24) + (approxRed << 16) + (approxGreen << 8) + approxBlue;
+
+              System.out.println((new Color(approxRGB)));
+              System.out.println();
+              System.out.println("Col" + j);
+              System.out.println();
 
               scaled.setRGB(j, i, approxRGB);
             } else {
@@ -251,7 +279,7 @@ public class BicubicInterpolation {
               int approxRGB = (approxAlpha << 24) + (approxRed << 16) + (approxGreen << 8) + approxBlue;
               
               scaled.setRGB(j, i, approxRGB);
-              System.out.println(0.25f*(((i-1)%2) + 1));
+              System.out.println(0.25f*(((j-1)%2) + 1));
               System.out.println((new Color(approxRGB)));
               System.out.println();
               System.out.println("Col" + j);
