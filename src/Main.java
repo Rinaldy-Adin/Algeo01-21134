@@ -153,8 +153,9 @@ public class Main {
             Util.writeToFile(folder, fileName, outputString);
             System.out.println(outputString);
             System.out.println();
-
-          } else if(input == 2) {
+          } 
+          
+          else if(input == 2) {
             // Determinant
             System.out.println("1. Metode reduksi baris");
             System.out.println("2. Metode kofaktor");
@@ -210,8 +211,9 @@ public class Main {
             Util.writeToFile(folder, fileName, outputString);
             System.out.println(outputString);
             System.out.println();
-            
-          } else if(input == 3) {
+          } 
+          
+          else if(input == 3) {
             // Inverse
             System.out.println("1. Metode Gauss-Jordan");
             System.out.println("2. Metode Adjoin");
@@ -224,6 +226,8 @@ public class Main {
             System.out.println();
 
             Matrix matrix;
+            String outputString = "";
+
             if (inputMethod == 1) {
               System.out.print("Input ukuran matrix n*n: ");
               int n = scan.nextInt();
@@ -249,17 +253,43 @@ public class Main {
             } else {
               matrix = new Matrix(0, 0);
             }
+            
+            Matrix inv;
 
             if (inputSub == 1) {
-              Inverse.gaussJordanInverse(matrix).display();
-              System.out.println();
+              inv = Matrix.copyMatrix(Inverse.gaussJordanInverse(matrix));
             }
-            else if (inputSub == 2) {
-              Inverse.adjoinMethod(matrix).display();
-              System.out.println();
+            else {
+              inv = Matrix.copyMatrix(Inverse.adjoinMethod(matrix));
             }
 
-          } else if(input == 4) {
+            // Fill in output string
+            int i, j;
+            for (i=0; i<inv.getNRows(); i++) {
+              for (j=0; j<inv.getNCols(); j++) {
+                outputString += inv.data[i][j];
+                if (j < inv.getNCols()-1) {
+                  outputString += " ";
+                }
+                else if (i < inv.getNRows()-1) {
+                  outputString += "\n";
+                }
+              }
+            }
+
+            System.out.print("Lokasi folder output: ");
+            String folder = scan.nextLine();
+            System.out.println();
+            System.out.print("Nama file: ");
+            String fileName = scan.nextLine();
+            System.out.println();
+
+            Util.writeToFile(folder, fileName, outputString);
+            System.out.println(outputString);
+            System.out.println();
+          } 
+          
+          else if(input == 4) {
             // Interpolasi Polinom
             System.out.println("1. Masukkan melalui keyboard");
             System.out.println("2. Masukkan melalui file");
