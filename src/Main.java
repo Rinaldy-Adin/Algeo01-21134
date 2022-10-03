@@ -278,25 +278,29 @@ public class Main {
               matrix = new Matrix(0, 0);
             }
             
-            Matrix inv;
-
-            if (inputSub == 1) {
-              inv = Matrix.copyMatrix(Inverse.gaussJordanInverse(matrix));
+            if (Determinant.cofactor(matrix) == 0) {
+              outputString += "Matrix tidak memiliki invers";
             }
             else {
-              inv = Matrix.copyMatrix(Inverse.adjoinMethod(matrix));
-            }
-
-            // Fill in output string
-            int i, j;
-            for (i=0; i<inv.getNRows(); i++) {
-              for (j=0; j<inv.getNCols(); j++) {
-                outputString += inv.data[i][j];
-                if (j < inv.getNCols()-1) {
-                  outputString += " ";
-                }
-                else if (i < inv.getNRows()-1) {
-                  outputString += "\n";
+              Matrix inv;
+              if (inputSub == 1) {
+                inv = Matrix.copyMatrix(Inverse.gaussJordanInverse(matrix));
+              }
+              else {
+                inv = Matrix.copyMatrix(Inverse.adjoinMethod(matrix));
+              }
+  
+              // Fill in output string
+              int i, j;
+              for (i=0; i<inv.getNRows(); i++) {
+                for (j=0; j<inv.getNCols(); j++) {
+                  outputString += inv.data[i][j];
+                  if (j < inv.getNCols()-1) {
+                    outputString += " ";
+                  }
+                  else if (i < inv.getNRows()-1) {
+                    outputString += "\n";
+                  }
                 }
               }
             }
