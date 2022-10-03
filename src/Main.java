@@ -65,7 +65,6 @@ public class Main {
             
             // Input Sub-Menu
             if (inputSub == 1) {
-              tempMtx = LinearEquation.gaussianElimination(matrix);
               // Solve linear eq. here
               String[] result = LinearEquation.solveGauss(matrix);
               // Display solution
@@ -80,7 +79,6 @@ public class Main {
               System.out.println("]");
             }
             else if (inputSub == 2) {
-              tempMtx = LinearEquation.gaussJordanElimination(matrix);
               // Solve linear eq. here
               String[] result = LinearEquation.solveGaussJordan(matrix);
               // Display solution
