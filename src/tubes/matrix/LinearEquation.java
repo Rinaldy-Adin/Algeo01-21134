@@ -25,7 +25,7 @@ public class LinearEquation {
                     }
 
                     matrix.subtractRowByArray(i, rowArray);
-//                    matrix.data[i][j] = 0;
+                    matrix.data[i][j] = 0;
                 }
 
                 currentRow++;
@@ -162,7 +162,7 @@ public class LinearEquation {
                     for (k = 0; k < matrix.nCols; k++) {
                         matrix.data[j][k] -= matrix.data[i][k] * ratio;
                     }
-//                    matrix.data[j][colOfPivot] = 0;
+                    matrix.data[j][colOfPivot] = 0;
                 }
             }
         }
