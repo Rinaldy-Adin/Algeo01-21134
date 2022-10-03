@@ -74,7 +74,7 @@ public class LinearEquation {
                 }
             }
 
-            if (coefs[i][matrix.nCols - 1] != 0) res[pivot] += Math.round(coefs[i][matrix.nCols - 1] * 100) / 100f;
+            if (coefs[i][matrix.nCols - 1] != 0) res[pivot] += Math.round(coefs[i][matrix.nCols - 1] * 100) / 100d;
 
             for (int j = pivot + 1; j < matrix.nCols - 1; j++) {
                 if (coefs[i][j] == 0) continue;
@@ -91,7 +91,7 @@ public class LinearEquation {
                     }
                 }
 
-                if (Math.abs(coefs[i][j]) != 1) res[pivot] += Math.round(Math.abs(coefs[i][j]) * 100) / 100f;
+                if (Math.abs(coefs[i][j]) != 1) res[pivot] += Math.round(Math.abs(coefs[i][j]) * 100) / 100d;
                 char var = 'a';
                 var += j;
                 res[pivot] += var;
@@ -167,7 +167,7 @@ public class LinearEquation {
             if (pivot >= matrix.nCols - 1) continue;
 
             if (matrix.data[i][matrix.nCols - 1] != 0) {
-                res[pivot] += Math.round(matrix.data[i][matrix.nCols - 1] * 100) / 100f;
+                res[pivot] += Math.round(matrix.data[i][matrix.nCols - 1] * 100) / 100d;
             }
 
             for (int j = pivot + 1; j < matrix.nCols - 1; j++) {
@@ -186,7 +186,7 @@ public class LinearEquation {
                 }
 
                 if (Math.abs(matrix.data[i][j]) != 1)
-                    res[pivot] += Math.round(Math.abs(matrix.data[i][j]) * 100) / 100f;
+                    res[pivot] += Math.round(Math.abs(matrix.data[i][j]) * 100) / 100d;
                 char var = 'a';
                 var += j;
                 res[pivot] += var;
@@ -220,7 +220,7 @@ public class LinearEquation {
         // Kasus kalo matriksnya bukan matriks persegi
         if (matrix.getNCols() - 1 != matrix.getNRows()) {
             for (int i = 0; i < output.getNRows(); i++) {
-                output.data[i][0] = 0.0f;
+                output.data[i][0] = 0.0;
             }
             return output;
         }

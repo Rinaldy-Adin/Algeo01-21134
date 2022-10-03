@@ -44,7 +44,7 @@ public class Inverse {
 
         for (i = 1; i < tempCopy.nRows; i++) {
             int colOfPivot = 0;
-            while (colOfPivot < tempCopy.nCols-1 && tempCopy.data[i][colOfPivot] == 0) {
+            while (colOfPivot < tempCopy.nCols - 1 && tempCopy.data[i][colOfPivot] == 0) {
                 colOfPivot++;
             }
 
@@ -65,7 +65,7 @@ public class Inverse {
     }
 
     public static Matrix adjoinMethod(Matrix matrix) {
-      // Compute the inverse of an invertible matrix using adjoin method
+        // Compute the inverse of an invertible matrix using adjoin method
 
         Matrix cofactorMatrix = new Matrix(matrix.getNRows(), matrix.getNCols());
         for (int i = 0; i < matrix.getNRows(); i++) {
@@ -95,7 +95,7 @@ public class Inverse {
                 if ((i + j) % 2 == 0) {
                     cofactorMatrix.data[i][j] = Determinant.cofactor(minor);
                 } else {
-                    cofactorMatrix.data[i][j] = -1.0f * Determinant.cofactor(minor);
+                    cofactorMatrix.data[i][j] = -1.0 * Determinant.cofactor(minor);
                 }
             }
         }

@@ -64,6 +64,7 @@ public class Matrix {
         return arr;
     }
 
+<<<<<<< HEAD
     public double[] getMatrixAsOneDimensionalArray() {
         double[] arr = new double[nCols * nRows];
 
@@ -76,6 +77,8 @@ public class Matrix {
         return arr;
     }
 
+=======
+>>>>>>> testing
     public void swapRow(int R1, int R2) {
         if (R1 >= nRows || R2 >= nRows || R1 == R2) return;
 
@@ -101,7 +104,7 @@ public class Matrix {
     }
 
     public void divideRowByK(int R1, double k) {
-        multiplyRowByK(R1, (double) 1.0 / k);
+        multiplyRowByK(R1, 1.0 / k);
     }
 
     public void subtractRowByArray(int R1, double[] arr) {
@@ -128,7 +131,17 @@ public class Matrix {
     }
 
     public static Matrix transpose(Matrix matrix) {
-      // Transpose the input matrix and outputs it as a new matrix
+        // Transpose the input matrix and outputs it as a new matrix
+
+        Matrix transposeMatrix = new Matrix(matrix.getNCols(), matrix.getNRows());
+        for (int i = 0; i < transposeMatrix.getNRows(); i++) {
+            for (int j = 0; j < transposeMatrix.getNCols(); j++) {
+                transposeMatrix.data[i][j] = matrix.data[j][i];
+            }
+        }
+        return transposeMatrix;
+    }
+
 
         Matrix transposeMatrix = new Matrix(matrix.getNCols(), matrix.getNRows());
         for (int i = 0; i < transposeMatrix.getNRows(); i++) {

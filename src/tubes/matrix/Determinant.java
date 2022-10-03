@@ -3,7 +3,8 @@ package tubes.matrix;
 import tubes.util.Util;
 
 public class Determinant {
-    public static double rowReduction(Matrix matrix) {
+    public static double rowReduction(Matrix matrixIn) {
+        Matrix matrix = Matrix.copyMatrix(matrixIn);
         double det = 1;
 
         int currentRow = 0;
@@ -18,8 +19,6 @@ public class Determinant {
 
             if (matrix.data[currentRow][j] != 0) {
                 det *= matrix.data[currentRow][j];
-                matrix.display();
-                System.out.println();
                 matrix.divideRowByK(currentRow, matrix.data[currentRow][j]);
 
                 for (int i = currentRow + 1; i < matrix.nRows; i++) {
@@ -43,35 +42,35 @@ public class Determinant {
         return det;
     }
 
-    public static double cofactor(Matrix matrix) {
-      // Compute the determinant of a matrix using cofactor expansion method
+    public static double cofactor(Matrix matrixIn) {
+        Matrix matrix = Matrix.copyMatrix(matrixIn);
 
-      if(matrix.getNCols() == 2 && matrix.getNRows() == 2) {
-        return matrix.data[0][0]*matrix.data[1][1] - matrix.data[0][1]*matrix.data[1][0];
-      } else {
-        double determinant = 0.0f;
-        for(int k = 0; k < matrix.getNRows(); k++) {
-          Matrix minor = new Matrix(matrix.getNRows() - 1, matrix.getNCols() - 1);
+        if (matrix.getNCols() == 2 && matrix.getNRows() == 2) {
+            return matrix.data[0][0] * matrix.data[1][1] - matrix.data[0][1] * matrix.data[1][0];
+        } else {
+            double determinant = 0.0;
+            for (int k = 0; k < matrix.getNRows(); k++) {
+                Matrix minor = new Matrix(matrix.getNRows() - 1, matrix.getNCols() - 1);
 
-          for(int i = 0; i < k; i++) {
-            for(int j = 1; j < matrix.getNCols(); j++) {
-              minor.data[i][j-1] = matrix.data[i][j]; 
+                for (int i = 0; i < k; i++) {
+                    for (int j = 1; j < matrix.getNCols(); j++) {
+                        minor.data[i][j - 1] = matrix.data[i][j];
+                    }
+                }
+                for (int i = k + 1; i < matrix.getNRows(); i++) {
+                    for (int j = 1; j < matrix.getNCols(); j++) {
+                        minor.data[i - 1][j - 1] = matrix.data[i][j];
+                    }
+                }
+
+                if (k % 2 == 0) {
+                    determinant += matrix.data[k][0] * cofactor(minor);
+                } else {
+                    determinant += -1.0 * matrix.data[k][0] * cofactor(minor);
+                }
             }
-          }
-          for(int i = k+1; i < matrix.getNRows(); i++) {
-            for(int j = 1; j < matrix.getNCols(); j++) {
-              minor.data[i-1][j-1] = matrix.data[i][j];
-            }
-          }
 
-          if(k%2 == 0) {
-            determinant += matrix.data[k][0]*cofactor(minor);
-          } else {
-            determinant += -1.0*matrix.data[k][0]*cofactor(minor);
-          }
+            return determinant;
         }
-
-        return determinant;
-      }
     }
 }
