@@ -54,7 +54,7 @@ public class Main {
               scan.nextLine();
             } 
             else if (inputMethod == 2) {
-              System.out.print("Lokasi file masukkan: ");
+              System.out.print("Lokasi absolut file masukkan: ");
               scan.nextLine();
               String pathString = scan.nextLine();
 
@@ -143,7 +143,7 @@ public class Main {
               }
               scan.nextLine();
             } else if(inputMethod == 2) {
-              System.out.print("Lokasi file masukkan: ");
+              System.out.print("Lokasi absolut file masukkan: ");
               scan.nextLine();
               String pathString = scan.nextLine();
 
@@ -191,7 +191,7 @@ public class Main {
               scan.nextLine();
             } 
             else if (inputMethod == 2) {
-              System.out.print("Lokasi file masukkan: ");
+              System.out.print("Lokasi absolut file masukkan: ");
               scan.nextLine();
               String pathString = scan.nextLine();
 
@@ -227,7 +227,7 @@ public class Main {
                 }
               }
             } else if(inputMethod == 2) {
-              System.out.print("Lokasi file masukkan: ");
+              System.out.print("Lokasi absolut file masukkan: ");
               scan.nextLine();
               String pathString = scan.nextLine();
 
@@ -269,7 +269,7 @@ public class Main {
             System.out.println(outputString);
           } else if(input == 5) {
             // Bicubic Interpolation
-            System.out.print("Lokasi file masukkan: ");
+            System.out.print("Lokasi absolut file masukkan: ");
             scan.nextLine();
             String pathString = scan.nextLine();
 
@@ -352,7 +352,7 @@ public class Main {
               }
             }
             else if(inputMethod == 2) {
-              System.out.print("Lokasi file masukan: ");
+              System.out.print("Lokasi absolut file masukan: ");
               scan.nextLine();
               String pathString = scan.nextLine();
               
@@ -394,7 +394,7 @@ public class Main {
 
           } else if(input == 7) {
             // Image Scaling
-            System.out.print("Lokasi file masukkan: ");
+            System.out.print("Lokasi absolut file masukkan: ");
             scan.nextLine();
             String pathString = scan.nextLine();
 
