@@ -69,12 +69,30 @@ public class Main {
               // Solve linear eq. here
               String[] result = LinearEquation.solveGauss(matrix);
               // Display solution
+              int i;
+              System.out.print("[");
+              for (i=0; i<result.length; i++) {
+                System.out.print(result[i]);
+                if (i<result.length-1) {
+                  System.out.print(", ");
+                }
+              }
+              System.out.println("]");
             }
             else if (inputSub == 2) {
               tempMtx = LinearEquation.gaussJordanElimination(matrix);
               // Solve linear eq. here
               String[] result = LinearEquation.solveGaussJordan(matrix);
               // Display solution
+              int i;
+              System.out.print("[");
+              for (i=0; i<result.length; i++) {
+                System.out.print(result[i]);
+                if (i<result.length-1) {
+                  System.out.print(", ");
+                }
+              }
+              System.out.println("]");
             }
             else if (inputSub == 3) {
               Matrix coefficient = new Matrix(matrix.getNRows(), matrix.getNCols()-1);
@@ -92,8 +110,8 @@ public class Main {
                 constant.data[i][0] = matrix.data[i][matrix.getNCols()-1];
               }
               
-              tempMtx = LinearEquation.solveLinearWithInverse(coefficient, constant);
               // Solve linear eq. here
+              tempMtx = LinearEquation.solveLinearWithInverse(coefficient, constant);
               // Display solution
               tempMtx.display();
             }
@@ -103,7 +121,7 @@ public class Main {
             }
 
           } else if(input == 2) {
-            // Determinan
+            // Determinant
             System.out.println("1. Metode reduksi baris");
             System.out.println("2. Metode kofaktor");
             int inputSub = scan.nextInt();
@@ -379,7 +397,7 @@ public class Main {
             System.out.println();
             System.out.println("Hasil taksiran Xk: ");
             System.out.println(LinearRegression.approxMLR(x, y, k));
-            
+
 
           } else if(input == 7) {
             // Keluar
