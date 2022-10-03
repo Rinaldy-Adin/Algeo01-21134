@@ -42,19 +42,19 @@ public class BicubicIntepolationTest {
 
             x = 0.5;
             y = 0.5;
-            expected = 196.02777;
-            assertEquals(expected, BicubicInterpolation.interpolate(matrix, x, y), 1e-5);
+            expected = 97.75;
+            assertEquals(expected, BicubicInterpolation.interpolate(matrix, x, y), 1e-2);
 
             x = 0.25;
             y = 0.75;
-            expected = 229.50415;
-            assertEquals(expected, BicubicInterpolation.interpolate(matrix, x, y), 1e-5);
+            expected = 105.527588;
+            assertEquals(expected, BicubicInterpolation.interpolate(matrix, x, y), 1e-6);
 
             x = 0.1;
             y = 0.9;
-            expected = 247.0103399;
-            assertEquals(expected, BicubicInterpolation.interpolate(matrix, x, y), 1e-7);
-        } catch (Exception e) {
+            expected = 104.231940;
+            assertEquals(expected, BicubicInterpolation.interpolate(matrix, x, y), 1e-6);
+        } catch (IOException e) {
             fail(e);
         }
     }

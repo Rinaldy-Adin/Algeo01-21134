@@ -7,7 +7,7 @@ public class LinearEquation {
         Matrix matrix = Matrix.copyMatrix(matrixIn);
 
         int currentRow = 0;
-        for (int j = 0; j < matrix.nCols && currentRow < matrix.nRows; j++) {
+        for (int j = 0; j < matrix.nCols - 1 && currentRow < matrix.nRows; j++) {
             for (int i = currentRow + 1; i < matrix.nRows && matrix.data[currentRow][j] == 0; i++) {
                 if (matrix.data[i][j] != 0)
                     matrix.swapRow(currentRow, i);
@@ -16,6 +16,7 @@ public class LinearEquation {
 
             if (matrix.data[currentRow][j] != 0) {
                 matrix.divideRowByK(currentRow, matrix.data[currentRow][j]);
+                matrix.data[currentRow][j] = 1;
 
                 for (int i = currentRow + 1; i < matrix.nRows; i++) {
                     double[] rowArray = matrix.getRowAsArray(currentRow);
@@ -24,6 +25,7 @@ public class LinearEquation {
                     }
 
                     matrix.subtractRowByArray(i, rowArray);
+//                    matrix.data[i][j] = 0;
                 }
 
                 currentRow++;
@@ -34,7 +36,9 @@ public class LinearEquation {
         return matrix;
     }
 
-    public static String[] solveRowEchelon(Matrix matrix) {
+    public static String[] solveRowEchelon(Matrix matrixIn) {
+        Matrix matrix = Matrix.copyMatrix(matrixIn);
+
         double[][] coefs = new double[matrix.nCols - 1][27];
         String[] res = new String[matrix.nCols - 1];
 
@@ -114,6 +118,18 @@ public class LinearEquation {
     public static String[] solveGauss(Matrix matrixIn) {
         Matrix matrix = Matrix.copyMatrix(matrixIn);
         Matrix rowEchelon = gaussianElimination(matrix);
+
+        for (int i = 0; i < rowEchelon.nRows; i++) {
+            boolean hasNonZero = false;
+            for (int j = 0; j < rowEchelon.nCols - 1; j++) {
+                if (rowEchelon.data[i][j] != 0) hasNonZero = true;
+            }
+            if (!hasNonZero && rowEchelon.data[i][rowEchelon.nCols - 1] != 0) {
+                String[] output = {"Tidak ada solusi"};
+                return output;
+            }
+        }
+
         return solveRowEchelon(rowEchelon);
     }
 
@@ -146,6 +162,7 @@ public class LinearEquation {
                     for (k = 0; k < matrix.nCols; k++) {
                         matrix.data[j][k] -= matrix.data[i][k] * ratio;
                     }
+//                    matrix.data[j][colOfPivot] = 0;
                 }
             }
         }
@@ -209,6 +226,18 @@ public class LinearEquation {
     public static String[] solveGaussJordan(Matrix matrixIn) {
         Matrix matrix = Matrix.copyMatrix(matrixIn);
         Matrix reducedRowEchelon = gaussJordanElimination(matrix);
+
+        for (int i = 0; i < reducedRowEchelon.nRows; i++) {
+            boolean hasNonZero = false;
+            for (int j = 0; j < reducedRowEchelon.nCols - 1; j++) {
+                if (reducedRowEchelon.data[i][j] != 0) hasNonZero = true;
+            }
+            if (!hasNonZero && reducedRowEchelon.data[i][reducedRowEchelon.nCols - 1] != 0) {
+                String[] output = {"Tidak ada solusi"};
+                return output;
+            }
+        }
+
         return solveReducedRowEchelon(reducedRowEchelon);
     }
 
@@ -246,6 +275,28 @@ public class LinearEquation {
             }
             double kDeterminant = Determinant.rowReduction(cramerMatrix);
             output.data[k][0] = kDeterminant / determinant;
+        }
+
+        return output;
+    }
+
+    public static String[] solveCramer(Matrix matrixIn) {
+        if (matrixIn.nCols - 1 != matrixIn.nRows) {
+            String[] msg = {"Tidak ada solusi tunggal"};
+            return msg;
+        }
+
+        Matrix matrix = Matrix.copyMatrix(matrixIn);
+        Matrix cramerResult = cramerRule(matrix);
+
+
+        String[] output = new String[matrix.nRows];
+        for (int i = 0; i < cramerResult.nRows; i++) {
+            output[i] = String.format("%.2f", cramerResult.data[i][0]);
+            if (output[i].contains("Infinity")) {
+                String[] msg = {"Tidak ada solusi tunggal"};
+                return msg;
+            }
         }
 
         return output;
