@@ -543,7 +543,7 @@ public class Main {
             
             outputStringFile = outputStringEq + "\n" + outputStringApx;
 
-            System.out.println();
+            scan.nextLine();
             System.out.print("Lokasi folder output: ");
             String folder = scan.nextLine();
             System.out.println();
