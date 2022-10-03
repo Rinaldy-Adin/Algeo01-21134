@@ -38,6 +38,7 @@ public class Main {
             System.out.println();
 
             Matrix matrix;
+            String outputString = "";
 
             // Get method of matrix input
             if(inputMethod == 1) {
@@ -58,6 +59,7 @@ public class Main {
               scan.nextLine();
               System.out.println();
             } 
+
             else if (inputMethod == 2) {
               System.out.print("Lokasi file masukan: ");
               scan.nextLine();
@@ -76,29 +78,29 @@ public class Main {
               String[] result = LinearEquation.solveGauss(matrix);
               // Display solution
               int i;
-              System.out.print("[");
               for (i=0; i<result.length; i++) {
-                System.out.print(result[i]);
+                outputString += "X" + (i+1) + " = ";
+                outputString += result[i];
                 if (i<result.length-1) {
-                  System.out.print(", ");
+                  outputString += ", ";
                 }
               }
-              System.out.println("]");
             }
+
             else if (inputSub == 2) {
               // Solve linear eq. here
               String[] result = LinearEquation.solveGaussJordan(matrix);
               // Display solution
               int i;
-              System.out.print("[");
               for (i=0; i<result.length; i++) {
-                System.out.print(result[i]);
+                outputString += "X" + (i+1) + " = ";
+                outputString += result[i];
                 if (i<result.length-1) {
-                  System.out.print(", ");
+                  outputString += ", ";
                 }
               }
-              System.out.println("]");
             }
+
             else if (inputSub == 3) {
               Matrix coefficient = new Matrix(matrix.getNRows(), matrix.getNCols()-1);
               Matrix constant = new Matrix(matrix.getNRows(), 1);
@@ -119,29 +121,37 @@ public class Main {
               tempMtx = Matrix.transpose(LinearEquation.solveLinearWithInverse(coefficient, constant));
               // Display solution
               double result[] = tempMtx.data[0];
-              System.out.print("[");
               for (i=0; i<result.length; i++) {
-                System.out.printf("%.2f", result[i]);
+                outputString += "X" + (i+1) + " = ";
+                outputString += result[i];
                 if (i<result.length-1) {
-                  System.out.print(", ");
+                  outputString += ", ";
                 }
               }
-              System.out.println("]");
             }
 
             else if (inputSub == 4) {
               Matrix cramer = Matrix.transpose(LinearEquation.cramerRule(matrix));
               double result[] = cramer.data[0];
               int i;
-              System.out.print("[");
               for (i=0; i<result.length; i++) {
-                System.out.printf("%.2f", result[i]);
+                outputString += "X" + (i+1) + " = ";
+                outputString += result[i];
                 if (i<result.length-1) {
-                  System.out.print(", ");
+                  outputString += ", ";
                 }
               }
-              System.out.println("]");
             }
+            
+            System.out.print("Lokasi folder output: ");
+            String folder = scan.nextLine();
+            System.out.println();
+            System.out.print("Nama file: ");
+            String fileName = scan.nextLine();
+            System.out.println();
+
+            Util.writeToFile(folder, fileName, outputString);
+            System.out.println(outputString);
             System.out.println();
 
           } else if(input == 2) {
