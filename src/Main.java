@@ -343,12 +343,31 @@ public class Main {
               scan.nextLine();
               String pathString = scan.nextLine();
               
-              
               float[][] data = Util.readFromFile(pathString);
-              x = new Matrix(data);
+              x = new Matrix(data.length-1, data[0].length-1);
+              y = new Matrix(data.length-1, 1);
+              k = new Matrix(0, data[0].length-1);
+
+              int i, j;
+
+              for (i=0; i<x.getNRows(); i++) {
+                for (j=0; j<x.getNCols(); j++) {
+                  x.data[i][j] = data[i][j];
+                }
+              }
+
+              for (i=0; i<y.getNRows(); i++) {
+                y.data[i][0] = data[i][data[0].length-1];
+              }
+
+              for (i=0; i<k.getNCols(); i++) {
+                k.data[0][i] = data[data.length-1][i];
+              }
             }
             else {
               x = new Matrix(0, 0);
+              y = new Matrix(0, 0);
+              k = new Matrix(0, 0);
             }
 
             // Transpose x such that it follows the formatting in LinearRegression class
@@ -358,7 +377,6 @@ public class Main {
             System.out.println();
             System.out.println("Hasil taksiran Xk: ");
             System.out.println(LinearRegression.approxMLR(x, y, k));
-            
             
 
           } else if(input == 7) {
