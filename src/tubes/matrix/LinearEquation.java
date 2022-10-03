@@ -273,7 +273,7 @@ public class LinearEquation {
                     }
                 }
             }
-            double kDeterminant = Determinant.cofactor(cramerMatrix);
+            double kDeterminant = Determinant.rowReduction(cramerMatrix);
             output.data[k][0] = kDeterminant / determinant;
         }
 
