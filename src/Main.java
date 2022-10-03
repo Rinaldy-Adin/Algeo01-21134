@@ -67,11 +67,13 @@ public class Main {
             if (inputSub == 1) {
               tempMtx = LinearEquation.gaussianElimination(matrix);
               // Solve linear eq. here
+              String[] result = LinearEquation.solveGauss(matrix);
               // Display solution
             }
             else if (inputSub == 2) {
               tempMtx = LinearEquation.gaussJordanElimination(matrix);
               // Solve linear eq. here
+              String[] result = LinearEquation.solveGaussJordan(matrix);
               // Display solution
             }
             else if (inputSub == 3) {
