@@ -65,27 +65,34 @@ public class BicubicInterpolation {
 
     public static void scaleImage(String inputPath, String outputFileName) {
       try {
-        BufferedImage image = ImageIO.read(new File(inputPath));
-        // BufferedImage image = new BufferedImage(4, 4, test.getType());
-        // image.setRGB(0, 0, 0xFFFF0000);
-        // image.setRGB(1, 0, 0xFFFF0000);
-        // image.setRGB(0, 1, 0xFFFF0000);
-        // image.setRGB(1, 1, 0xFFFF0000);
+        BufferedImage test = ImageIO.read(new File(inputPath));
+        BufferedImage image = new BufferedImage(4, 4, test.getType());
+        image.setRGB(0, 0, 0xFFFF0000);
+        image.setRGB(1, 0, 0xFFFF0000);
+        image.setRGB(0, 1, 0xFFFF0000);
+        image.setRGB(1, 1, 0xFFFF0000);
 
-        // image.setRGB(0, 2, 0xFF00FF00);
-        // image.setRGB(0, 3, 0xFF00FF00);
-        // image.setRGB(1, 2, 0xFF00FF00);
-        // image.setRGB(1, 3, 0xFF00FF00);
+        image.setRGB(0, 2, 0xFF00FF00);
+        image.setRGB(0, 3, 0xFF00FF00);
+        image.setRGB(1, 2, 0xFF00FF00);
+        image.setRGB(1, 3, 0xFF00FF00);
 
-        // image.setRGB(2, 0, 0xFF0000FF);
-        // image.setRGB(2, 1, 0xFF0000FF);
-        // image.setRGB(3, 0, 0xFF0000FF);
-        // image.setRGB(3, 1, 0xFF0000FF);
+        image.setRGB(2, 0, 0xFF0000FF);
+        image.setRGB(2, 1, 0xFF0000FF);
+        image.setRGB(3, 0, 0xFF0000FF);
+        image.setRGB(3, 1, 0xFF0000FF);
         
-        // image.setRGB(2, 2, 0xFF000000);
-        // image.setRGB(2, 3, 0xFF000000);
-        // image.setRGB(3, 2, 0xFF000000);
-        // image.setRGB(3, 3, 0xFF000000);
+        image.setRGB(2, 2, 0xFF000000);
+        image.setRGB(2, 3, 0xFF000000);
+        image.setRGB(3, 2, 0xFF000000);
+        image.setRGB(3, 3, 0xFF000000);
+
+        for(int i = 0; i < 4; i++) {
+          for(int j = 0; j < 4; j++) {
+            System.out.print((new Color(image.getRGB(j, i))).getGreen() + " ");
+          }
+          System.out.println();
+        }
 
         BufferedImage scaled = new BufferedImage(2*image.getWidth(), 2*image.getHeight(), image.getType());
         for(int i = 0; i < scaled.getHeight(); i++) {
@@ -158,54 +165,54 @@ public class BicubicInterpolation {
               for(int k = 0; k < 4; k++) {
                 for(int l = 0; l < 4; l++) {
                   if(endI-2+k < 0) {
-                    if(endJ-2+k < 0) {
+                    if(endJ-2+l < 0) {
                       redApproxMatrix.data[k][l] = (new Color(image.getRGB(0, 0))).getRed();
                       greenApproxMatrix.data[k][l] = (new Color(image.getRGB(0, 0))).getGreen();
                       blueApproxMatrix.data[k][l] = (new Color(image.getRGB(0, 0))).getBlue();
-                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(0, 0))).getBlue();
-                    } else if(endJ-2+k == image.getWidth()) {
+                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(0, 0))).getAlpha();
+                    } else if(endJ-2+l == image.getWidth()) {
                       redApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, 0))).getRed();
                       greenApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, 0))).getGreen();
                       blueApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, 0))).getBlue();
-                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, 0))).getBlue();
+                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, 0))).getAlpha();
                     } else {
-                      redApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, 0))).getRed();
-                      greenApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, 0))).getGreen();
-                      blueApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, 0))).getBlue();
-                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, 0))).getBlue();
+                      redApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, 0))).getRed();
+                      greenApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, 0))).getGreen();
+                      blueApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, 0))).getBlue();
+                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, 0))).getAlpha();
                     }
                   } else if(endI-2+k == image.getHeight()) {
-                    if(endJ-2+k < 0) {
+                    if(endJ-2+l < 0) {
                       redApproxMatrix.data[k][l] = (new Color(image.getRGB(0, image.getHeight()-1))).getRed();
                       greenApproxMatrix.data[k][l] = (new Color(image.getRGB(0, image.getHeight()-1))).getGreen();
                       blueApproxMatrix.data[k][l] = (new Color(image.getRGB(0, image.getHeight()-1))).getBlue();
-                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(0, image.getHeight()-1))).getBlue();
-                    } else if(endJ-2+k == image.getWidth()) {
+                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(0, image.getHeight()-1))).getAlpha();
+                    } else if(endJ-2+l == image.getWidth()) {
                       redApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, image.getHeight()-1))).getRed();
                       greenApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, image.getHeight()-1))).getGreen();
                       blueApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, image.getHeight()-1))).getBlue();
-                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, image.getHeight()-1))).getBlue();
+                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, image.getHeight()-1))).getAlpha();
                     } else {
-                      redApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, image.getHeight()-1))).getRed();
-                      greenApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, image.getHeight()-1))).getGreen();
-                      blueApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, image.getHeight()-1))).getBlue();
-                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, image.getHeight()-1))).getBlue();
+                      redApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, image.getHeight()-1))).getRed();
+                      greenApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, image.getHeight()-1))).getGreen();
+                      blueApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, image.getHeight()-1))).getBlue();
+                      alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, image.getHeight()-1))).getAlpha();
                     }
-                  } else if(endJ-2+k < 0) {
+                  } else if(endJ-2+l < 0) {
                     redApproxMatrix.data[k][l] = (new Color(image.getRGB(0, endI-2+k))).getRed();
                     greenApproxMatrix.data[k][l] = (new Color(image.getRGB(0, endI-2+k))).getGreen();
                     blueApproxMatrix.data[k][l] = (new Color(image.getRGB(0, endI-2+k))).getBlue();
-                    alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(0, endI-2+k))).getBlue();
-                  } else if(endJ-2+k == image.getWidth()) {
+                    alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(0, endI-2+k))).getAlpha();
+                  } else if(endJ-2+l == image.getWidth()) {
                     redApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, endI-2+k))).getRed();
                     greenApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, endI-2+k))).getGreen();
                     blueApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, endI-2+k))).getBlue();
-                    alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, endI-2+k))).getBlue();
+                    alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(image.getWidth()-1, endI-2+k))).getAlpha();
                   } else {
-                    redApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, endI-2+k))).getRed();
-                    greenApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, endI-2+k))).getGreen();
-                    blueApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, endI-2+k))).getBlue();
-                    alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+k, endI-2+k))).getBlue();
+                    redApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, endI-2+k))).getRed();
+                    greenApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, endI-2+k))).getGreen();
+                    blueApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, endI-2+k))).getBlue();
+                    alphaApproxMatrix.data[k][l] = (new Color(image.getRGB(endJ-2+l, endI-2+k))).getAlpha();
                   }
                 }
               }
@@ -215,9 +222,40 @@ public class BicubicInterpolation {
               int approxBlue = (int) interpolate(blueApproxMatrix, 0.25f*(((j-1)%2) + 1), 0.25f*(((i-1)%2) + 1));
               int approxAlpha = (int) interpolate(alphaApproxMatrix, 0.25f*(((j-1)%2) + 1), 0.25f*(((i-1)%2) + 1));
 
-              int approxRGB = (approxAlpha << 24) + (approxRed << 16) + (approxGreen << 8) + approxBlue;
+              if(approxRed > 255) {
+                approxRed = 255;
+              } else if(approxRed < 0) {
+                approxRed = 0;
+              }
 
+              if(approxGreen > 255) {
+                approxGreen = 255;
+              } else if(approxGreen < 0) {
+                approxGreen = 0;
+              }
+
+              if(approxBlue > 255) {
+                approxBlue = 255;
+              } else if(approxBlue < 0) {
+                approxBlue = 0;
+              }
+
+              if(approxAlpha > 255) {
+                approxAlpha = 255;
+              } else if(approxAlpha < 0) {
+                approxAlpha = 0;
+              }
+
+              redApproxMatrix.display();
+              // System.out.print("(" + approxRed + " " + approxGreen + " " + approxBlue + ") ");
+              int approxRGB = (approxAlpha << 24) + (approxRed << 16) + (approxGreen << 8) + approxBlue;
+              
               scaled.setRGB(j, i, approxRGB);
+              System.out.println(0.25f*(((i-1)%2) + 1));
+              System.out.println((new Color(approxRGB)));
+              System.out.println();
+              System.out.println("Col" + j);
+              System.out.println();
               // System.out.println("=========================");
               // redApproxMatrix.display();
               // System.out.println();
@@ -226,14 +264,17 @@ public class BicubicInterpolation {
               // blueApproxMatrix.display();
               // System.out.println("==================");
             }
-
+            
             // System.out.print(String.format("0x%08X", scaled.getRGB(j, i)) + " ");
           }
+          System.out.println();
+          System.out.println("Row" + i);
+          System.out.println();
           // System.out.println();
         }
 
         File output = new File(outputFileName);
-        ImageIO.write(scaled, "jpg", output);
+        ImageIO.write(scaled, "png", output);
       } catch (Exception e) {
         System.out.println(e);
       }
