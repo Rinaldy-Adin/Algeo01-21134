@@ -14,24 +14,15 @@ public class BicubicInterpolation {
         for (int x = -1; x <= 2; x++) {
             int row = (x + 1) + (y + 1) * 4;
 
-<<<<<<< HEAD
             for (int j = 0; j < 4; j++) {
                 for (int i = 0; i < 4; i++) {
                     int col = i + j * 4;
-                    matrix.data[row][col] = (float) (Math.pow(x, i) * Math.pow(y, j));
-=======
-                for (int j = 0; j < 4; j++) {
-                    for (int i = 0; i < 4; i++) {
-                        int col = i + j * 4;
-                        matrix.data[row][col] = (Math.pow(x, i) * Math.pow(y, j));
-                    }
->>>>>>> feature/menu
+                    matrix.data[row][col] = (Math.pow(x, i) * Math.pow(y, j));
                 }
             }
         }
     }
 
-<<<<<<< HEAD
     return matrix;
 }
 
@@ -40,18 +31,9 @@ public static Matrix solveCoefficient(Matrix values) {
     for (int y = -1; y <= 2; y++) {
         for (int x = -1; x <= 2; x++) {
             valuesMatrixOneCol.data[(x + 1) + (y + 1) * 4][0] = values.data[x + 1][y + 1];
-=======
-    public static Matrix solveCoefficient(Matrix values) {
-        Matrix valuesMatrixOneCol = new Matrix(16, 1);
-        for (int y = -1; y <= 2; y++) {
-            for (int x = -1; x <= 2; x++) {
-                valuesMatrixOneCol.data[(x + 1) + (y + 1) * 4][0] = values.data[x + 1][y + 1];
-            }
->>>>>>> feature/menu
         }
     }
 
-<<<<<<< HEAD
     Matrix inverseVariables = Inverse.gaussJordanInverse(generateVariablesMatrix());
     Matrix coefMatrixOneCol = Matrix.multiplyMatrix(inverseVariables, valuesMatrixOneCol);
 
@@ -59,91 +41,53 @@ public static Matrix solveCoefficient(Matrix values) {
     for (int j = 0; j < 4; j++) {
         for (int i = 0; i < 4; i++) {
             coefMatrix.data[i][j] = coefMatrixOneCol.data[i + j * 4][0];
-=======
-        Matrix inverseVariables = Inverse.gaussJordanInverse(generateVariablesMatrix());
-        Matrix coefMatrixOneCol = Matrix.multiplyMatrix(inverseVariables, valuesMatrixOneCol);
-
-        Matrix coefMatrix = new Matrix(4, 4);
-        for (int j = 0; j < 4; j++) {
-            for (int i = 0; i < 4; i++) {
-                coefMatrix.data[i][j] = coefMatrixOneCol.data[i + j * 4][0];
-            }
->>>>>>> feature/menu
         }
     }
 
     return coefMatrix;
-}
+  }
 
-public static double interpolate(Matrix values, double x, double y) {
-    if (x < 0 || x > 1 || y < 0 || y > 1) {
-        return Double.NaN;
-    }
+  public static double interpolate(Matrix values, double x, double y) {
+      if (x < 0 || x > 1 || y < 0 || y > 1) {
+          return Double.NaN;
+      }
 
-<<<<<<< HEAD
-    Matrix diff = new Matrix(16, 17);
-    Matrix vars = generateVariablesMatrix();
-    for (int i = 0; i < 16; i++) {
-        for (int j = 0; j < 16; j++) {
-            diff.data[i][j] = vars.data[i][j];
-        }
-    }
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            diff.data[j + i * 4][16] = values.data[i][j];
-=======
-    public static double interpolate(Matrix values, double x, double y) {
-        if (x < 0 || x > 1 || y < 0 || y > 1) {
-            return Double.NaN;
->>>>>>> feature/menu
-        }
-    }
+      Matrix diff = new Matrix(16, 17);
+      Matrix vars = generateVariablesMatrix();
+      for (int i = 0; i < 16; i++) {
+          for (int j = 0; j < 16; j++) {
+              diff.data[i][j] = vars.data[i][j];
+          }
+      }
+      for (int i = 0; i < 4; i++) {
+          for (int j = 0; j < 4; j++) {
+              diff.data[j + i * 4][16] = values.data[i][j];
+          }
+      }
 
-<<<<<<< HEAD
-    Matrix res = LinearEquation.gaussJordanElimination(diff);
+      Matrix res = LinearEquation.gaussJordanElimination(diff);
 
-    float[] col = res.getColAsArray(16);
-    Matrix coefficient = new Matrix(4, 4);
-    for (int j = 0; j < 4; j++) {
-        for (int i = 0; i < 4; i++) {
-            coefficient.data[i][j] = col[i + j * 4];
-//                System.out.printf("a%d%d: %f\n", i, j, coefficient.data[i][j]);
-        }
-    }
+      double[] col = res.getColAsArray(16);
+      Matrix coefficient = new Matrix(4, 4);
+      for (int j = 0; j < 4; j++) {
+          for (int i = 0; i < 4; i++) {
+              coefficient.data[i][j] = col[i + j * 4];
+          }
+      }
 
 
-    double result = 0;
-    for (int j = 0; j < 4; j++) {
-        for (int i = 0; i < 4; i++) {
-            result += coefficient.data[i][j] * Math.pow(x, i) * Math.pow(y, j);
-//                System.out.printf("%f + %f ^ %d + %f ^ %d\n", coefficient.data[i][j], x, i, y, j);
-        }
-    }
+      double result = 0;
+      for (int j = 0; j < 4; j++) {
+          for (int i = 0; i < 4; i++) {
+              result += coefficient.data[i][j] * Math.pow(x, i) * Math.pow(y, j);
+          }
+      }
 
-    return result;
-}    public static void scaleImage(String inputPath, String outputFileName) {
+      return result;
+  }
+    public static void scaleImage(String inputPath, String outputFileName) {
       try {
-        BufferedImage test = ImageIO.read(new File(inputPath));
-        BufferedImage image = new BufferedImage(4, 4, test.getType());
-        image.setRGB(0, 0, 0xFFFF0000);
-        image.setRGB(1, 0, 0xFFFF0000);
-        image.setRGB(0, 1, 0xFFFF0000);
-        image.setRGB(1, 1, 0xFFFF0000);
-
-        image.setRGB(0, 2, 0xFF00FF00);
-        image.setRGB(0, 3, 0xFF00FF00);
-        image.setRGB(1, 2, 0xFF00FF00);
-        image.setRGB(1, 3, 0xFF00FF00);
-
-        image.setRGB(2, 0, 0xFF0000FF);
-        image.setRGB(2, 1, 0xFF0000FF);
-        image.setRGB(3, 0, 0xFF0000FF);
-        image.setRGB(3, 1, 0xFF0000FF);
-        
-        image.setRGB(2, 2, 0xFF000000);
-        image.setRGB(2, 3, 0xFF000000);
-        image.setRGB(3, 2, 0xFF000000);
-        image.setRGB(3, 3, 0xFF000000);
+        BufferedImage image = ImageIO.read(new File(inputPath));
 
         for(int i = 0; i < 4; i++) {
           for(int j = 0; j < 4; j++) {
@@ -171,10 +115,10 @@ public static double interpolate(Matrix values, double x, double y) {
               // Top and bottom side
               int endJ = (j+1) / 2;
 
-              float[][] dataRed = {{endJ-1, (new Color(image.getRGB(endJ-1, i/2))).getRed()}, {endJ, (new Color(image.getRGB(endJ, i/2))).getRed()}};
-              float[][] dataGreen = {{endJ-1, (new Color(image.getRGB(endJ-1, i/2))).getGreen()}, {endJ, (new Color(image.getRGB(endJ, i/2))).getGreen()}};
-              float[][] dataBlue = {{endJ-1, (new Color(image.getRGB(endJ-1, i/2))).getBlue()}, {endJ, (new Color(image.getRGB(endJ, i/2))).getBlue()}};
-              float[][] dataAlpha = {{endJ-1, (new Color(image.getRGB(endJ-1, i/2))).getBlue()}, {endJ, (new Color(image.getRGB(endJ, i/2))).getBlue()}};
+              double[][] dataRed = {{endJ-1, (new Color(image.getRGB(endJ-1, i/2))).getRed()}, {endJ, (new Color(image.getRGB(endJ, i/2))).getRed()}};
+              double[][] dataGreen = {{endJ-1, (new Color(image.getRGB(endJ-1, i/2))).getGreen()}, {endJ, (new Color(image.getRGB(endJ, i/2))).getGreen()}};
+              double[][] dataBlue = {{endJ-1, (new Color(image.getRGB(endJ-1, i/2))).getBlue()}, {endJ, (new Color(image.getRGB(endJ, i/2))).getBlue()}};
+              double[][] dataAlpha = {{endJ-1, (new Color(image.getRGB(endJ-1, i/2))).getBlue()}, {endJ, (new Color(image.getRGB(endJ, i/2))).getBlue()}};
 
 
               Matrix pointsRed = new Matrix(dataRed);
@@ -194,10 +138,10 @@ public static double interpolate(Matrix values, double x, double y) {
               // Left and right side
               int endI = (i+1) / 2;
 
-              float[][] dataRed = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getRed()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getRed()}};
-              float[][] dataGreen = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getGreen()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getGreen()}};
-              float[][] dataBlue = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getBlue()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getBlue()}};
-              float[][] dataAlpha = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getAlpha()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getAlpha()}};
+              double[][] dataRed = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getRed()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getRed()}};
+              double[][] dataGreen = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getGreen()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getGreen()}};
+              double[][] dataBlue = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getBlue()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getBlue()}};
+              double[][] dataAlpha = {{endI-1, (new Color(image.getRGB(j/2, endI-1))).getBlue()}, {endI, (new Color(image.getRGB(j/2, endI-1))).getBlue()}};
 
               Matrix pointsRed = new Matrix(dataRed);
               Matrix pointsGreen = new Matrix(dataGreen);
@@ -211,13 +155,9 @@ public static double interpolate(Matrix values, double x, double y) {
 
               int approxRGB = (approxAlpha << 24) + (approxRed << 16) + (approxGreen << 8) + approxBlue;
 
-              System.out.println((new Color(approxRGB)));
-              System.out.println();
-              System.out.println("Col" + j);
-              System.out.println();
-
               scaled.setRGB(j, i, approxRGB);
             } else {
+              // Middle
               int endI = (i+1) / 2;
               int endJ = (j+1) / 2;
 
@@ -309,69 +249,17 @@ public static double interpolate(Matrix values, double x, double y) {
                 approxAlpha = 0;
               }
 
-              redApproxMatrix.display();
-              // System.out.print("(" + approxRed + " " + approxGreen + " " + approxBlue + ") ");
               int approxRGB = (approxAlpha << 24) + (approxRed << 16) + (approxGreen << 8) + approxBlue;
               
               scaled.setRGB(j, i, approxRGB);
-              System.out.println(0.25f*(((j-1)%2) + 1));
-              System.out.println((new Color(approxRGB)));
-              System.out.println();
-              System.out.println("Col" + j);
-              System.out.println();
-              // System.out.println("=========================");
-              // redApproxMatrix.display();
-              // System.out.println();
-              // greenApproxMatrix.display();
-              // System.out.println();
-              // blueApproxMatrix.display();
-              // System.out.println("==================");
-=======
-        Matrix diff = new Matrix(16, 17);
-        Matrix vars = generateVariablesMatrix();
-        for (int i = 0; i < 16; i++) {
-            for (int j = 0; j < 16; j++) {
-                diff.data[i][j] = vars.data[i][j];
-            }
-        }
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                diff.data[j + i * 4][16] = values.data[i][j];
-            }
-        }
-
-        Matrix res = LinearEquation.gaussJordanElimination(diff);
-
-        double[] col = res.getColAsArray(16);
-        Matrix coefficient = new Matrix(4, 4);
-        for (int j = 0; j < 4; j++) {
-            for (int i = 0; i < 4; i++) {
-                coefficient.data[i][j] = col[i + j * 4];
-//                System.out.printf("a%d%d: %f\n", i, j, coefficient.data[i][j]);
-            }
-        }
-
-
-        double result = 0;
-        for (int j = 0; j < 4; j++) {
-            for (int i = 0; i < 4; i++) {
-                result += coefficient.data[i][j] * Math.pow(x, i) * Math.pow(y, j);
-//                System.out.printf("%f + %f ^ %d + %f ^ %d\n", coefficient.data[i][j], x, i, y, j);
->>>>>>> feature/menu
-            }
-            
-            // System.out.print(String.format("0x%08X", scaled.getRGB(j, i)) + " ");
           }
-          System.out.println();
-          System.out.println("Row" + i);
-          System.out.println();
-          // System.out.println();
         }
-
+      }
         File output = new File(outputFileName);
         ImageIO.write(scaled, "png", output);
       } catch (Exception e) {
         System.out.println(e);
       }
     }
-}
+  }
+
