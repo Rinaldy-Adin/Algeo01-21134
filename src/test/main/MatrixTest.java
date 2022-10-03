@@ -18,10 +18,10 @@ public class MatrixTest {
 
     @BeforeEach
     void setupMatrix() throws IOException {
-        float[][] c3 = Util.readFromFile(new File("src/test/cases/general/counting3x3.txt").getCanonicalPath());
-        float[][] c4 = Util.readFromFile(new File("src/test/cases/general/counting4x4.txt").getCanonicalPath());
-        float[][] i3 = Util.readFromFile(new File("src/test/cases/general/identity3x3.txt").getCanonicalPath());
-        float[][] i4 = Util.readFromFile(new File("src/test/cases/general/identity4x4.txt").getCanonicalPath());
+        double[][] c3 = Util.readFromFile(new File("src/test/cases/general/counting3x3.txt").getCanonicalPath());
+        double[][] c4 = Util.readFromFile(new File("src/test/cases/general/counting4x4.txt").getCanonicalPath());
+        double[][] i3 = Util.readFromFile(new File("src/test/cases/general/identity3x3.txt").getCanonicalPath());
+        double[][] i4 = Util.readFromFile(new File("src/test/cases/general/identity4x4.txt").getCanonicalPath());
 
         counting3x3 = new Matrix(c3);
         counting4x4 = new Matrix(c4);
@@ -31,7 +31,7 @@ public class MatrixTest {
 
     @Test
     void testConstructor() {
-        float[][] data = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        double[][] data = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         Matrix matrix = new Matrix(data);
 
         assertTrue(Arrays.deepEquals(matrix.data, counting3x3.data));
@@ -45,9 +45,9 @@ public class MatrixTest {
 
     @Test
     void testGetAsArray() {
-        float[] row = {5, 6, 7, 8};
-        float[] col = {2, 5, 8};
-        float[] diag = {1, 1, 1, 1};
+        double[] row = {5, 6, 7, 8};
+        double[] col = {2, 5, 8};
+        double[] diag = {1, 1, 1, 1};
 
         assertArrayEquals(row, counting4x4.getRowAsArray(1));
         assertArrayEquals(col, counting3x3.getColAsArray(1));
@@ -56,10 +56,10 @@ public class MatrixTest {
 
     @Test
     void testArrayOperations() {
-        float[] oneToThree = {1, 2, 3};
-        float[] timesTwo = {2, 4, 6, 8};
-        float[] divideTwo = {2.5f, 3, 3.5f, 4};
-        float[] subtracted = {6, 6, 6};
+        double[] oneToThree = {1, 2, 3};
+        double[] timesTwo = {2, 4, 6, 8};
+        double[] divideTwo = {2.5f, 3, 3.5f, 4};
+        double[] subtracted = {6, 6, 6};
 
         counting3x3.swapRow(0, 1);
         assertArrayEquals(oneToThree, counting3x3.getRowAsArray(1));
@@ -83,7 +83,7 @@ public class MatrixTest {
 
     @Test
     void testTranspose() throws IOException {
-        float[][] transposeData = Util.readFromFile(new File("src/test/cases/matrixtests/transpose.txt").getCanonicalPath());
+        double[][] transposeData = Util.readFromFile(new File("src/test/cases/matrixtests/transpose.txt").getCanonicalPath());
         Matrix transposeMatrix = new Matrix(transposeData);
 
         counting3x3.transpose();
@@ -92,8 +92,8 @@ public class MatrixTest {
 
     @Test
     void testMultiply() throws IOException {
-        float[][] multiplierData = Util.readFromFile(new File("src/test/cases/matrixtests/multiplier.txt").getCanonicalPath());
-        float[][] resultData = Util.readFromFile(new File("src/test/cases/matrixtests/multiplyresult.txt").getCanonicalPath());
+        double[][] multiplierData = Util.readFromFile(new File("src/test/cases/matrixtests/multiplier.txt").getCanonicalPath());
+        double[][] resultData = Util.readFromFile(new File("src/test/cases/matrixtests/multiplyresult.txt").getCanonicalPath());
 
         Matrix multiplier = new Matrix(multiplierData);
         Matrix result = new Matrix(resultData);

@@ -3,7 +3,9 @@ package tubes.matrix;
 import java.util.Arrays;
 
 public class LinearEquation {
-    public static Matrix gaussianElimination(Matrix matrix) {
+    public static Matrix gaussianElimination(Matrix matrixIn) {
+        Matrix matrix = Matrix.copyMatrix(matrixIn);
+
         int currentRow = 0;
         for (int j = 0; j < matrix.nCols && currentRow < matrix.nRows; j++) {
             for (int i = currentRow + 1; i < matrix.nRows && matrix.data[currentRow][j] == 0; i++) {
@@ -16,7 +18,7 @@ public class LinearEquation {
                 matrix.divideRowByK(currentRow, matrix.data[currentRow][j]);
 
                 for (int i = currentRow + 1; i < matrix.nRows; i++) {
-                    float[] rowArray = matrix.getRowAsArray(currentRow);
+                    double[] rowArray = matrix.getRowAsArray(currentRow);
                     for (int k = 0; k < matrix.nCols; k++) {
                         rowArray[k] *= matrix.data[i][j];
                     }
@@ -33,7 +35,7 @@ public class LinearEquation {
     }
 
     public static String[] solveRowEchelon(Matrix matrix) {
-        float[][] coefs = new float[matrix.nCols - 1][27];
+        double[][] coefs = new double[matrix.nCols - 1][27];
         String[] res = new String[matrix.nCols - 1];
 
         Arrays.fill(res, "");
@@ -63,7 +65,7 @@ public class LinearEquation {
                 }
 
                 if (matchingRow != i) {
-                    float currentCoef = coefs[i][j];
+                    double currentCoef = coefs[i][j];
                     coefs[i][j] = 0;
 
                     for (int l = 0; l < matrix.nCols; l++) {
@@ -72,7 +74,7 @@ public class LinearEquation {
                 }
             }
 
-            if (coefs[i][matrix.nCols - 1] != 0) res[pivot] += coefs[i][matrix.nCols - 1];
+            if (coefs[i][matrix.nCols - 1] != 0) res[pivot] += Math.round(coefs[i][matrix.nCols - 1] * 100) / 100d;
 
             for (int j = pivot + 1; j < matrix.nCols - 1; j++) {
                 if (coefs[i][j] == 0) continue;
@@ -89,7 +91,7 @@ public class LinearEquation {
                     }
                 }
 
-                if (Math.abs(coefs[i][j]) != 1) res[pivot] += Math.abs(coefs[i][j]);
+                if (Math.abs(coefs[i][j]) != 1) res[pivot] += Math.round(Math.abs(coefs[i][j]) * 100) / 100d;
                 char var = 'a';
                 var += j;
                 res[pivot] += var;
@@ -109,16 +111,18 @@ public class LinearEquation {
         return res;
     }
 
-    public static String[] solveGauss(Matrix matrix) {
+    public static String[] solveGauss(Matrix matrixIn) {
+        Matrix matrix = Matrix.copyMatrix(matrixIn);
         Matrix rowEchelon = gaussianElimination(matrix);
         return solveRowEchelon(rowEchelon);
     }
 
-    public static Matrix gaussJordanElimination(Matrix matrix) {
+    public static Matrix gaussJordanElimination(Matrix matrixIn) {
+        Matrix matrix = Matrix.copyMatrix(matrixIn);
         int i, j, k;
 
         // Forward phase, turn matrix into Echelon form
-        LinearEquation.gaussianElimination(matrix);
+        matrix = LinearEquation.gaussianElimination(matrix);
 
         // Pivot = first non-zero element from the left of row
         // i increments reference row
@@ -134,10 +138,11 @@ public class LinearEquation {
             }
 
             // Check if row didn't contain all zeros (pivot is a non-zero)
-            if (colOfPivot < matrix.nCols && matrix.data[i][colOfPivot] != 0) {
+            if (colOfPivot < matrix.nCols - 1 && matrix.data[i][colOfPivot] != 0) {
                 // Operate every row above pivot with a non-zero element at the same column as pivot
-                for (j = 0; j < i && matrix.data[j][colOfPivot] != 0; j++) {
-                    float ratio = matrix.data[j][colOfPivot] / matrix.data[i][colOfPivot];
+                for (j = 0; j < i; j++) {
+                    if (matrix.data[j][colOfPivot] == 0) continue;
+                    double ratio = matrix.data[j][colOfPivot] / matrix.data[i][colOfPivot];
                     for (k = 0; k < matrix.nCols; k++) {
                         matrix.data[j][k] -= matrix.data[i][k] * ratio;
                     }
@@ -149,7 +154,8 @@ public class LinearEquation {
         return matrix;
     }
 
-    public static String[] solveReducedRowEchelon(Matrix matrix) {
+    public static String[] solveReducedRowEchelon(Matrix matrixIn) {
+        Matrix matrix = Matrix.copyMatrix(matrixIn);
         String[] res = new String[matrix.nCols - 1];
         Arrays.fill(res, "");
 
@@ -158,8 +164,11 @@ public class LinearEquation {
             while (pivot < matrix.nCols - 1 && matrix.data[i][pivot] != 1) {
                 pivot++;
             }
+            if (pivot >= matrix.nCols - 1) continue;
 
-            if (matrix.data[i][matrix.nCols - 1] != 0) res[pivot] += matrix.data[i][matrix.nCols - 1];
+            if (matrix.data[i][matrix.nCols - 1] != 0) {
+                res[pivot] += Math.round(matrix.data[i][matrix.nCols - 1] * 100) / 100d;
+            }
 
             for (int j = pivot + 1; j < matrix.nCols - 1; j++) {
                 if (matrix.data[i][j] == 0) continue;
@@ -176,11 +185,14 @@ public class LinearEquation {
                     }
                 }
 
-                if (Math.abs(matrix.data[i][j]) != 1) res[pivot] += Math.abs(matrix.data[i][j]);
+                if (Math.abs(matrix.data[i][j]) != 1)
+                    res[pivot] += Math.round(Math.abs(matrix.data[i][j]) * 100) / 100d;
                 char var = 'a';
                 var += j;
                 res[pivot] += var;
             }
+
+            if (res[pivot].equals("")) res[pivot] += 0;
         }
 
         for (int i = 0; i < matrix.nCols - 1; i++) {
@@ -194,19 +206,21 @@ public class LinearEquation {
         return res;
     }
 
-    public static String[] solveGaussJordan(Matrix matrix) {
+    public static String[] solveGaussJordan(Matrix matrixIn) {
+        Matrix matrix = Matrix.copyMatrix(matrixIn);
         Matrix reducedRowEchelon = gaussJordanElimination(matrix);
-        return solveRowEchelon(reducedRowEchelon);
+        return solveReducedRowEchelon(reducedRowEchelon);
     }
 
-    public static Matrix cramerRule(Matrix matrix) {
+    public static Matrix cramerRule(Matrix matrixIn) {
+        Matrix matrix = Matrix.copyMatrix(matrixIn);
         Matrix output = new Matrix(matrix.getNRows(), 1);
         Matrix inputMatrix = new Matrix(matrix.getNRows(), matrix.getNCols() - 1);
 
         // Kasus kalo matriksnya bukan matriks persegi
         if (matrix.getNCols() - 1 != matrix.getNRows()) {
             for (int i = 0; i < output.getNRows(); i++) {
-                output.data[i][0] = 0.0f;
+                output.data[i][0] = 0.0;
             }
             return output;
         }
@@ -216,7 +230,7 @@ public class LinearEquation {
                 inputMatrix.data[i][j] = matrix.data[i][j];
             }
         }
-        float determinant = Determinant.rowReduction(inputMatrix);
+        double determinant = Determinant.rowReduction(inputMatrix);
 
         for (int k = 0; k < output.getNRows(); k++) {
             Matrix cramerMatrix = new Matrix(matrix.getNRows(), matrix.getNCols() - 1);
@@ -230,7 +244,7 @@ public class LinearEquation {
                     }
                 }
             }
-            float kDeterminant = Determinant.rowReduction(cramerMatrix);
+            double kDeterminant = Determinant.rowReduction(cramerMatrix);
             output.data[k][0] = kDeterminant / determinant;
         }
 

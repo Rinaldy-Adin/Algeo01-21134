@@ -14,7 +14,7 @@ public class Util {
         return -1;
     }
 
-    public static int indexOfVal(float[] arr, float val) {
+    public static int indexOfVal(double[] arr, double val) {
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] == val)
                 return i;
@@ -23,7 +23,16 @@ public class Util {
         return -1;
     }
 
-    public static float[][] readFromFile(String pathString) {
+    private static double parseElmt(String str) {
+        if (str.contains("/")) {
+            String[] rat = str.split("/");
+            return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);
+        } else {
+            return Double.parseDouble(str);
+        }
+    }
+
+    public static double[][] readFromFile(String pathString) {
         Path file = Path.of(pathString);
         String matrixString = "";
         try {
@@ -44,16 +53,16 @@ public class Util {
         cols++;
         cols /= rows;
 
-        float[][] data = new float[rows][cols];
+        double[][] data = new double[rows][cols];
         String dataStr = "";
         int j = 0, k = 0;
         for (int i = 0; i < matrixString.length(); i++) {
             if (matrixString.charAt(i) == ' ') {
-                data[j][k] = Float.parseFloat(dataStr);
+                data[j][k] = parseElmt(dataStr);
                 k++;
                 dataStr = "";
             } else if (matrixString.charAt(i) == '\n') {
-                data[j][k] = Float.parseFloat(dataStr);
+                data[j][k] = parseElmt(dataStr);
                 j++;
                 k = 0;
                 dataStr = "";
