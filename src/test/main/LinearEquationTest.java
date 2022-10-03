@@ -16,6 +16,7 @@ public class LinearEquationTest {
     Matrix counting4x4;
     Matrix identity3x3;
     Matrix identity4x4;
+    String[] cramerNoSolution = {"Tidak ada solusi tunggal"};
 
     @BeforeEach
     void setupMatrix() throws IOException {
@@ -47,7 +48,6 @@ public class LinearEquationTest {
         return matrix;
     }
 
-    // TODO: Add handling for cramer and handling for no solutions
     @Test
     void testElimination() throws IOException {
         double[][] sample1 = Util.readFromFile(new File("src/test/cases/linearequation/gauss-sample1.txt").getCanonicalPath());
@@ -56,7 +56,8 @@ public class LinearEquationTest {
         String[] resultgauss1 = LinearEquation.solveGauss(matrix1);
         String[] resultgaussjordan1 = LinearEquation.solveGaussJordan(matrix1);
 
-//        assertArrayEquals(expected1, resultgauss1);
+        assertArrayEquals(expected1, resultgauss1);
+        assertArrayEquals(expected1, resultgaussjordan1);
 
         double[][] sample2 = Util.readFromFile(new File("src/test/cases/linearequation/gauss-sample2.txt").getCanonicalPath());
         String[] expected2 =
@@ -101,24 +102,41 @@ public class LinearEquationTest {
                         "7560.0",
                         "-2772.0"
                 };
+        String[] expectedcramer4a =
+                {
+                        "36.00",
+                        "-630.00",
+                        "3360.00",
+                        "-7560.00",
+                        "7560.00",
+                        "-2772.00"
+                };
         Matrix matrix4a = new Matrix(sample4a);
         String[] resultgauss4a = LinearEquation.solveGauss(matrix4a);
         String[] resultgaussjordan4a = LinearEquation.solveGaussJordan(matrix4a);
+        String[] resultcramer4a = LinearEquation.solveCramer(matrix4a);
 
         assertArrayEquals(expected4a, resultgauss4a);
         assertArrayEquals(expected4a, resultgaussjordan4a);
+        assertArrayEquals(expectedcramer4a, resultcramer4a);
 
         double[][] sample4b = Util.readFromFile(new File("src/test/cases/linearequation/gauss-sample4b.txt").getCanonicalPath());
         String[] expected4b =
                 {
                         "100.0", "-4949.8", "79195.67", "-600560.53", "2522331.25", "-6305780.06", "9608745.47", "-8750772.98", "4375365.28", "-923684.29"
                 };
+        String[] expectedcramer4b =
+                {
+                        "100.00", "-4949.89", "79195.78", "-600560.78", "2522331.48", "-6305780.07", "9608745.47", "-8750772.98", "4375365.28", "-923684.29"
+                };
         Matrix matrix4b = new Matrix(sample4b);
         String[] resultgauss4b = LinearEquation.solveGauss(matrix4b);
         String[] resultgaussjordan4b = LinearEquation.solveGaussJordan(matrix4b);
+        String[] resultcramer4b = LinearEquation.solveCramer(matrix4b);
 
         assertArrayEquals(expected4b, resultgauss4b);
         assertArrayEquals(expected4b, resultgaussjordan4b);
+        assertArrayEquals(expectedcramer4b, resultcramer4b);
 
         double[][] sample5 = Util.readFromFile(new File("src/test/cases/linearequation/gauss-sample5.txt").getCanonicalPath());
         String[] expected5 =
@@ -146,6 +164,7 @@ public class LinearEquationTest {
         Matrix matrix6 = new Matrix(sample6);
         String[] resultgauss6 = LinearEquation.solveGauss(matrix6);
         String[] resultgaussjordan6 = LinearEquation.solveGaussJordan(matrix6);
+        String[] resultcramer6 = LinearEquation.solveCramer(matrix6);
 
         assertArrayEquals(expected6, resultgauss6);
         assertArrayEquals(expected6, resultgaussjordan6);
@@ -153,15 +172,7 @@ public class LinearEquationTest {
         double[][] sample7 = Util.readFromFile(new File("src/test/cases/linearequation/gauss-sample7.txt").getCanonicalPath());
         String[] expected7 =
                 {
-                        "-148.91",
-                        "-8.93",
-                        "165.84",
-                        "248.77",
-                        "-140.64",
-                        "-93.13",
-                        "-93.85",
-                        "161.56",
-                        "-54.71",
+                        "Tidak ada solusi"
                 };
         Matrix matrix7 = new Matrix(sample7);
         String[] resultgauss7 = LinearEquation.solveGauss(matrix7);
