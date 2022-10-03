@@ -92,39 +92,52 @@ public class LinearRegression {
         return LinearEquation.gaussJordanElimination(aug);
     }
 
-    public static void writeMLREquation (Matrix x, Matrix y) {
+    public static String writeMLREquation (Matrix x, Matrix y) {
         Matrix aug = LinearRegression.multipleLinearReg(x, y);
         double[] solution = aug.getColAsArray(aug.nCols-1);
-        System.out.print("Y = ");
-        for (int i=0; i<solution.length; i++) {
+        int i;
+        
+        String outputString = "f(";
+        for (i=1; i<aug.getNCols()-1; i++) {
+            outputString += "X" + (i);
+            if (i < aug.getNCols()-2) {
+                outputString += ", ";
+            }
+            else {
+                outputString += ")";
+            }
+        }
+        outputString += " = ";
+
+        for (i=0; i<solution.length; i++) {
             if (solution[i] != 0) {
                 if (i == 0) {
-                    System.out.printf("%.2f", (solution[i]));
+                    outputString += String.format("%.3f", (solution[i]));
                 }
                 else {
-                    System.out.printf("%.2f", Math.abs(solution[i]));
-                    System.out.print(" X" + (i));
+                    outputString += String.format("%.3f", Math.abs(solution[i]));
+                    outputString += " X" + (i);
                 }
                 
                 if (i!=solution.length-1) {
                     if (solution[i+1] > 0) {
-                        System.out.print(" + ");
+                        outputString += " + ";
                     }
                     else if (solution[i+1] < 0) {
-                        System.out.print(" - ");
+                        outputString += " - ";
                     }
                 }
             }
             else if (solution[i] == 0 && i != 0 && i != solution.length-1) {
                 if (solution[i+1] > 0) {
-                    System.out.print(" + ");
+                    outputString += " + ";
                 }
                 else if (solution[i+1] < 0) {
-                    System.out.print(" - ");
+                    outputString += " - ";
                 }
             }
         }
-        System.out.println();
+        return outputString;
     }
 
     public static double approxMLR (Matrix x, Matrix y, Matrix k) {
