@@ -16,7 +16,8 @@ public class Main {
           System.out.println("4. Interpolasi polinom");
           System.out.println("5. Interpolasi bicubic");
           System.out.println("6. Regresi linier berganda");
-          System.out.println("7. Keluar");
+          System.out.println("7. Image scaling");
+          System.out.println("8. Keluar");
 
           int input = scan.nextInt();
 
@@ -159,12 +160,10 @@ public class Main {
               determinant = Determinant.cofactor(matrix);
             }
             String outputString = "Determinan: " + determinant;
-            System.out.print("Lokasi folder output: ");
-            String folder = scan.nextLine();
             System.out.print("Nama file: ");
             String fileName = scan.nextLine();
 
-            Util.writeToFile(folder, fileName, outputString);
+            Util.writeToFile(fileName, outputString);
             System.out.println(outputString);
             
           } else if(input == 3) {
@@ -263,12 +262,10 @@ public class Main {
             }
             outputString += ", f(" + x + ") = " + approx;
 
-            System.out.print("Lokasi folder output: ");
-            String folder = scan.nextLine();
             System.out.print("Nama file: ");
             String fileName = scan.nextLine();
 
-            Util.writeToFile(folder, fileName, outputString);
+            Util.writeToFile(fileName, outputString);
             System.out.println(outputString);
           } else if(input == 5) {
             // Bicubic Interpolation
@@ -292,12 +289,10 @@ public class Main {
             double val = BicubicInterpolation.interpolate(matrix, x, y);
             String outputString = "f(" + x + ", " + y + ") = " + val;
             
-            System.out.print("Lokasi folder output: ");
-            String folder = scan.nextLine();
             System.out.print("Nama file: ");
             String fileName = scan.nextLine();
 
-            Util.writeToFile(folder, fileName, outputString);
+            Util.writeToFile(fileName, outputString);
             System.out.println(outputString);
           } else if(input == 6) {
             // Regresi Linear Berganda
@@ -398,7 +393,15 @@ public class Main {
 
 
           } else if(input == 7) {
-            // Keluar
+            // Image Scaling
+            System.out.print("Lokasi file masukkan: ");
+            scan.nextLine();
+            String pathString = scan.nextLine();
+
+            System.out.print("Nama file: ");
+            String fileName = scan.nextLine();
+            BicubicInterpolation.scaleImage(pathString, fileName);
+          } else if(input == 8) {
             isActive = false;
           }
         }

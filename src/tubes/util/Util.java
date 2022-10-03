@@ -76,11 +76,13 @@ public class Util {
         return data;
     }
 
-    public static void writeToFile(String folderPath, String fileName, String outputString) {
+    public static void writeToFile(String fileName, String outputString) {
       // Write a string into a new txt file
       // (There must be no file with the same name in the new file location)
         try {
-            Path file = Files.createFile(Path.of(folderPath).resolve(fileName));
+            String filePath = new File("").getAbsolutePath();
+            filePath += "/output";
+            Path file = Files.createFile(Path.of(filePath).resolve(fileName));
             Files.writeString(file, outputString);
         } catch (Exception e) {
             System.out.println(e);

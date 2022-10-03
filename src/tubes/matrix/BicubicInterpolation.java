@@ -5,6 +5,8 @@ import java.lang.Math;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class BicubicInterpolation {
   private static Matrix generateVariablesMatrix() {
@@ -87,14 +89,7 @@ public static Matrix solveCoefficient(Matrix values) {
   }
     public static void scaleImage(String inputPath, String outputFileName) {
       try {
-        BufferedImage image = ImageIO.read(new File(inputPath));
-
-        for(int i = 0; i < 4; i++) {
-          for(int j = 0; j < 4; j++) {
-            System.out.print((new Color(image.getRGB(j, i))).getGreen() + " ");
-          }
-          System.out.println();
-        }
+        BufferedImage image = ImageIO.read(Path.of(inputPath).toFile());
 
         BufferedImage scaled = new BufferedImage(2*image.getWidth(), 2*image.getHeight(), image.getType());
         for(int i = 0; i < scaled.getHeight(); i++) {
@@ -255,8 +250,11 @@ public static Matrix solveCoefficient(Matrix values) {
           }
         }
       }
-        File output = new File(outputFileName);
-        ImageIO.write(scaled, "png", output);
+        String filePath = new File("").getAbsolutePath();
+        filePath += "/output";
+        Path output = Files.createFile(Path.of(filePath).resolve(outputFileName));
+
+        ImageIO.write(scaled, "png", output.toFile());
       } catch (Exception e) {
         System.out.println(e);
       }
