@@ -19,20 +19,23 @@ public class Main {
           System.out.println("7. Keluar");
 
           int input = scan.nextInt();
+          System.out.println();
 
           if(input == 1) {
             // SPL
             Matrix tempMtx;
 
             System.out.println("1. Metode eliminasi Gauss");
-            System.out.println("2. Metode Eliminasi Gauss-Jordan");
+            System.out.println("2. Metode eliminasi Gauss-Jordan");
             System.out.println("3. Metode matriks balikan");
             System.out.println("4. Kaidah Cramer");
             int inputSub = scan.nextInt();
+            System.out.println();
 
             System.out.println("1. Masukkan melalui keyboard");
             System.out.println("2. Masukkan melalui file");
             int inputMethod = scan.nextInt();
+            System.out.println();
 
             Matrix matrix;
 
@@ -40,8 +43,10 @@ public class Main {
             if(inputMethod == 1) {
               System.out.print("Jumlah baris matrix: ");
               int n = scan.nextInt();
+              System.out.println();
               System.out.print("Jumlah kolom matrix: ");
               int m = scan.nextInt();
+              System.out.println();
               System.out.println("Masukkan matrix: ");
 
               matrix = new Matrix(n, m);
@@ -51,11 +56,13 @@ public class Main {
                 }
               }
               scan.nextLine();
+              System.out.println();
             } 
             else if (inputMethod == 2) {
-              System.out.print("Lokasi file masukkan: ");
+              System.out.print("Lokasi file masukan: ");
               scan.nextLine();
               String pathString = scan.nextLine();
+              System.out.println();
 
               double[][] data = Util.readFromFile(pathString);
               matrix = new Matrix(data);
@@ -109,29 +116,51 @@ public class Main {
               }
               
               // Solve linear eq. here
-              tempMtx = LinearEquation.solveLinearWithInverse(coefficient, constant);
+              tempMtx = Matrix.transpose(LinearEquation.solveLinearWithInverse(coefficient, constant));
               // Display solution
-              tempMtx.display();
+              double result[] = tempMtx.data[0];
+              System.out.print("[");
+              for (i=0; i<result.length; i++) {
+                System.out.printf("%.2f", result[i]);
+                if (i<result.length-1) {
+                  System.out.print(", ");
+                }
+              }
+              System.out.println("]");
             }
 
             else if (inputSub == 4) {
-              LinearEquation.cramerRule(matrix).display();
+              Matrix cramer = Matrix.transpose(LinearEquation.cramerRule(matrix));
+              double result[] = cramer.data[0];
+              int i;
+              System.out.print("[");
+              for (i=0; i<result.length; i++) {
+                System.out.printf("%.2f", result[i]);
+                if (i<result.length-1) {
+                  System.out.print(", ");
+                }
+              }
+              System.out.println("]");
             }
+            System.out.println();
 
           } else if(input == 2) {
             // Determinant
             System.out.println("1. Metode reduksi baris");
             System.out.println("2. Metode kofaktor");
             int inputSub = scan.nextInt();
+            System.out.println();
 
             System.out.println("1. Masukkan melalui keyboard");
             System.out.println("2. Masukkan melalui file");
             int inputMethod = scan.nextInt();
+            System.out.println();
 
             Matrix matrix;
             if(inputMethod == 1) {
               System.out.print("Input ukuran matrix n*n: ");
               int n = scan.nextInt();
+              System.out.println();
               System.out.println("Masukkan matrix: ");
 
               matrix = new Matrix(n, n);
@@ -142,9 +171,10 @@ public class Main {
               }
               scan.nextLine();
             } else if(inputMethod == 2) {
-              System.out.print("Lokasi file masukkan: ");
+              System.out.print("Lokasi file masukan: ");
               scan.nextLine();
               String pathString = scan.nextLine();
+              System.out.println();
 
               double[][] data = Util.readFromFile(pathString);
               matrix = new Matrix(data);
@@ -159,29 +189,35 @@ public class Main {
               determinant = Determinant.cofactor(matrix);
             }
             String outputString = "Determinan: " + determinant;
+            System.out.println();
             System.out.print("Lokasi folder output: ");
             String folder = scan.nextLine();
+            System.out.println();
             System.out.print("Nama file: ");
             String fileName = scan.nextLine();
+            System.out.println();
 
             Util.writeToFile(folder, fileName, outputString);
             System.out.println(outputString);
+            System.out.println();
             
           } else if(input == 3) {
             // Inverse
             System.out.println("1. Metode Gauss-Jordan");
             System.out.println("2. Metode Adjoin");
-
             int inputSub = scan.nextInt();
+            System.out.println();
 
             System.out.println("1. Masukkan melalui keyboard");
             System.out.println("2. Masukkan melalui file");
             int inputMethod = scan.nextInt();
+            System.out.println();
 
             Matrix matrix;
             if (inputMethod == 1) {
               System.out.print("Input ukuran matrix n*n: ");
               int n = scan.nextInt();
+              System.out.println();
               System.out.println("Masukkan matrix: ");
               matrix = new Matrix(n, n);
               for(int i = 0; i < matrix.getNRows(); i++) {
@@ -190,11 +226,13 @@ public class Main {
                 }
               }
               scan.nextLine();
+              System.out.println();
             } 
             else if (inputMethod == 2) {
-              System.out.print("Lokasi file masukkan: ");
+              System.out.print("Lokasi file masukan: ");
               scan.nextLine();
               String pathString = scan.nextLine();
+              System.out.println();
 
               double[][] data = Util.readFromFile(pathString);
               matrix = new Matrix(data);
@@ -204,9 +242,11 @@ public class Main {
 
             if (inputSub == 1) {
               Inverse.gaussJordanInverse(matrix).display();
+              System.out.println();
             }
             else if (inputSub == 2) {
               Inverse.adjoinMethod(matrix).display();
+              System.out.println();
             }
 
           } else if(input == 4) {
@@ -214,11 +254,13 @@ public class Main {
             System.out.println("1. Masukkan melalui keyboard");
             System.out.println("2. Masukkan melalui file");
             int inputMethod = scan.nextInt();
+            System.out.println();
 
             Matrix points;
             if(inputMethod == 1) {
               System.out.print("Masukkan jumlah titik: ");
               int n = scan.nextInt();
+              System.out.println();
               System.out.println("Masukkan titik: ");
 
               points = new Matrix(n, 2);
@@ -227,10 +269,13 @@ public class Main {
                   points.data[i][j] = scan.nextDouble();
                 }
               }
+              System.out.println();
+
             } else if(inputMethod == 2) {
-              System.out.print("Lokasi file masukkan: ");
+              System.out.print("Lokasi file masukan: ");
               scan.nextLine();
               String pathString = scan.nextLine();
+              System.out.println();
 
               double[][] data = Util.readFromFile(pathString);
               points = new Matrix(data);
@@ -241,6 +286,7 @@ public class Main {
             System.out.print("Masukkan nilai x yang akan diaproksimasi: ");
             double x = scan.nextDouble();
             scan.nextLine();
+            System.out.println();
 
             Matrix coefficients = Interpolation.polynomialInterpolation(points);
             double approx = Interpolation.approximateFunction(points, x);
@@ -265,16 +311,20 @@ public class Main {
 
             System.out.print("Lokasi folder output: ");
             String folder = scan.nextLine();
+            System.out.println();
             System.out.print("Nama file: ");
             String fileName = scan.nextLine();
+            System.out.println();
 
             Util.writeToFile(folder, fileName, outputString);
             System.out.println(outputString);
+            System.out.println();
           } else if(input == 5) {
             // Bicubic Interpolation
-            System.out.print("Lokasi file masukkan: ");
+            System.out.print("Lokasi file masukan: ");
             scan.nextLine();
             String pathString = scan.nextLine();
+            System.out.println();
 
             double[][] data = Util.readFromFile(pathString);
             Matrix temp = new Matrix(data);
@@ -294,11 +344,14 @@ public class Main {
             
             System.out.print("Lokasi folder output: ");
             String folder = scan.nextLine();
+            System.out.println();
             System.out.print("Nama file: ");
             String fileName = scan.nextLine();
+            System.out.println();
 
             Util.writeToFile(folder, fileName, outputString);
             System.out.println(outputString);
+            System.out.println();
           } else if(input == 6) {
             // Regresi Linear Berganda
             System.out.println("1. Masukkan melalui keyboard");
@@ -315,7 +368,7 @@ public class Main {
               System.out.println("Masukkan jumlah sampel: ");
               int m = scan.nextInt();
 
-              x = new Matrix(n, m);
+              x = new Matrix(m, n);
               y = new Matrix(m, 1);
               k = new Matrix(1, n);
 
@@ -360,6 +413,7 @@ public class Main {
               System.out.print("Lokasi file masukan: ");
               scan.nextLine();
               String pathString = scan.nextLine();
+              System.out.println();
               
               double[][] data = Util.readFromFile(pathString);
               x = new Matrix(data.length-1, data[0].length-1);
@@ -395,6 +449,7 @@ public class Main {
             System.out.println();
             System.out.println("Hasil taksiran Xk: ");
             System.out.println(LinearRegression.approxMLR(transX, y, k));
+            System.out.println();
 
 
           } else if(input == 7) {

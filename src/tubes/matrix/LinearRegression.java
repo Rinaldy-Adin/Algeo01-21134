@@ -95,7 +95,7 @@ public class LinearRegression {
     public static void writeMLREquation (Matrix x, Matrix y) {
         Matrix aug = LinearRegression.multipleLinearReg(x, y);
         double[] solution = aug.getColAsArray(aug.nCols-1);
-        System.out.print("Y = ");
+        System.out.print("f(x) = ");
         for (int i=0; i<solution.length; i++) {
             if (solution[i] != 0) {
                 if (i == 0) {
