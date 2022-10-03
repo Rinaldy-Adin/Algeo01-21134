@@ -125,8 +125,11 @@ public class LinearEquation {
                 if (rowEchelon.data[i][j] != 0) hasNonZero = true;
             }
             if (!hasNonZero && rowEchelon.data[i][rowEchelon.nCols - 1] != 0) {
-                String[] output = {"Tidak ada solusi"};
-                return output;
+                String[] msg = new String[matrixIn.nCols - 1];
+                for (int k = 0; k < matrixIn.nCols - 1; k++) {
+                    msg[k] = "Tidak ada solusi";
+                }
+                return msg;
             }
         }
 
@@ -233,8 +236,11 @@ public class LinearEquation {
                 if (reducedRowEchelon.data[i][j] != 0) hasNonZero = true;
             }
             if (!hasNonZero && reducedRowEchelon.data[i][reducedRowEchelon.nCols - 1] != 0) {
-                String[] output = {"Tidak ada solusi"};
-                return output;
+                String[] msg = new String[matrixIn.nCols - 1];
+                for (int k = 0; k < matrixIn.nCols - 1; k++) {
+                    msg[k] = "Tidak ada solusi";
+                }
+                return msg;
             }
         }
 
@@ -282,7 +288,10 @@ public class LinearEquation {
 
     public static String[] solveCramer(Matrix matrixIn) {
         if (matrixIn.nCols - 1 != matrixIn.nRows) {
-            String[] msg = {"Tidak ada solusi tunggal"};
+            String[] msg = new String[matrixIn.nCols - 1];
+            for (int i = 0; i < matrixIn.nCols - 1; i++) {
+                msg[i] = "Tidak ada solusi tunggal";
+            }
             return msg;
         }
 

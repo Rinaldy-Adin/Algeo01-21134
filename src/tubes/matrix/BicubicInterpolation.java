@@ -27,28 +27,7 @@ public class BicubicInterpolation {
 
         return matrix;
     }
-
-    public static Matrix solveCoefficient(Matrix values) {
-        Matrix valuesMatrixOneCol = new Matrix(16, 1);
-        for (int y = -1; y <= 2; y++) {
-            for (int x = -1; x <= 2; x++) {
-                valuesMatrixOneCol.data[(x + 1) + (y + 1) * 4][0] = values.data[x + 1][y + 1];
-            }
-        }
-
-        Matrix inverseVariables = Inverse.gaussJordanInverse(generateVariablesMatrix());
-        Matrix coefMatrixOneCol = Matrix.multiplyMatrix(inverseVariables, valuesMatrixOneCol);
-
-        Matrix coefMatrix = new Matrix(4, 4);
-        for (int j = 0; j < 4; j++) {
-            for (int i = 0; i < 4; i++) {
-                coefMatrix.data[i][j] = coefMatrixOneCol.data[i + j * 4][0];
-            }
-        }
-
-        return coefMatrix;
-    }
-
+    
     public static double interpolate(Matrix values, double x, double y) {
         if (x < 0 || x > 1 || y < 0 || y > 1) {
             return Double.NaN;
