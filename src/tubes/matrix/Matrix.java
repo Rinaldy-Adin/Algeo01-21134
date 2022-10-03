@@ -127,16 +127,6 @@ public class Matrix {
         return transposeMatrix;
     }
 
-
-        Matrix transposeMatrix = new Matrix(matrix.getNCols(), matrix.getNRows());
-        for (int i = 0; i < transposeMatrix.getNRows(); i++) {
-            for (int j = 0; j < transposeMatrix.getNCols(); j++) {
-                transposeMatrix.data[i][j] = matrix.data[j][i];
-            }
-        }
-        return transposeMatrix;
-    }
-
     public static Matrix copyMatrix(Matrix matrix) {
         Matrix tempCopy = new Matrix(matrix.nRows, matrix.nCols);
         for (int i = 0; i < matrix.nRows; i++) {
@@ -159,23 +149,22 @@ public class Matrix {
         return m;
     }
 
-    public static Matrix makeAugmented (Matrix a, Matrix b) {
+    public static Matrix makeAugmented(Matrix a, Matrix b) {
         // Pre-condition : a.nRows == b.nRows
-        Matrix aug = new Matrix(a.nRows, a.nCols+b.nCols);
+        Matrix aug = new Matrix(a.nRows, a.nCols + b.nCols);
         int i, j;
 
-        for (i=0; i<aug.nRows; i++) {
-            for (j=0; j<aug.nCols; j++) {
-                if (j<a.nCols) {
+        for (i = 0; i < aug.nRows; i++) {
+            for (j = 0; j < aug.nCols; j++) {
+                if (j < a.nCols) {
                     aug.data[i][j] = a.data[i][j];
-                }
-                else {
-                    aug.data[i][j] = b.data[i][j-a.nCols];
+                } else {
+                    aug.data[i][j] = b.data[i][j - a.nCols];
                 }
             }
         }
 
         return aug;
     }
-    
+
 }

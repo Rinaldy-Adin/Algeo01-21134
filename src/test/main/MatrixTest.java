@@ -82,15 +82,6 @@ public class MatrixTest {
     }
 
     @Test
-    void testTranspose() throws IOException {
-        double[][] transposeData = Util.readFromFile(new File("src/test/cases/matrixtests/transpose.txt").getCanonicalPath());
-        Matrix transposeMatrix = new Matrix(transposeData);
-
-        counting3x3.transpose();
-        assertTrue(Arrays.deepEquals(transposeMatrix.data, counting3x3.data));
-    }
-
-    @Test
     void testMultiply() throws IOException {
         double[][] multiplierData = Util.readFromFile(new File("src/test/cases/matrixtests/multiplier.txt").getCanonicalPath());
         double[][] resultData = Util.readFromFile(new File("src/test/cases/matrixtests/multiplyresult.txt").getCanonicalPath());
