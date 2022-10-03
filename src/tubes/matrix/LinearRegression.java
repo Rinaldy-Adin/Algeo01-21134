@@ -28,7 +28,7 @@ public class LinearRegression {
                 // First row : Sigma(Xi)
                 // First column : Sigma(Xj)
                 else if (i == 0 || j == 0) {
-                    float sum = 0;
+                    double sum = 0;
                     for (k=0; k<x.nCols; k++) {
                         if (i == 0) {
                             sum += x.data[j-1][k];
@@ -42,7 +42,7 @@ public class LinearRegression {
 
                 // {Xij | i>0, j>0} : Sigma(Xik*Xjk)
                 else {
-                    float sumOfProduct = 0;
+                    double sumOfProduct = 0;
                     for (k=0; k<x.nCols; k++) {
                         sumOfProduct += x.data[i-1][k]*x.data[j-1][k];
                     }
@@ -71,7 +71,7 @@ public class LinearRegression {
         int i, j;
 
         // Initialize first element to be Sigma(y)
-        float sumY = 0;
+        double sumY = 0;
         for (j=0; j<y.nRows; j++) {
             sumY += y.data[j][0];
         }
@@ -89,13 +89,12 @@ public class LinearRegression {
     public static Matrix multipleLinearReg (Matrix x, Matrix y) {
         // Solve for b with Gauss-Jordan Elimination
         Matrix aug = new Matrix (Matrix.makeAugmented(LinearRegression.getMtxA(x), LinearRegression.getMtxH(x, y)).data.clone());
-        LinearEquation.gaussJordanElimination(aug);
-        return aug;
+        return LinearEquation.gaussJordanElimination(aug);
     }
 
     public static void writeMLREquation (Matrix x, Matrix y) {
         Matrix aug = LinearRegression.multipleLinearReg(x, y);
-        float[] solution = aug.getColAsArray(aug.nCols-1);
+        double[] solution = aug.getColAsArray(aug.nCols-1);
         System.out.print("Y = ");
         for (int i=0; i<solution.length; i++) {
             if (solution[i] != 0) {
@@ -128,13 +127,13 @@ public class LinearRegression {
         System.out.println();
     }
 
-    public static float approxMLR (Matrix x, Matrix y, Matrix k) {
+    public static double approxMLR (Matrix x, Matrix y, Matrix k) {
         // k : Matrix of x values that are to be approximated
         Matrix aug = LinearRegression.multipleLinearReg(x, y);
-        float[] solution = aug.getColAsArray(aug.nCols-1);
-        float sumY = solution[0];
+        double[] solution = aug.getColAsArray(aug.nCols-1);
+        double sumY = solution[0];
         for (int i=1; i<solution.length; i++) {
-            sumY += solution[i]*k.data[i-1][0];
+            sumY += solution[i]*k.data[0][i-1];
         }
         return sumY;
     }
