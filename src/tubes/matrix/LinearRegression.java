@@ -112,10 +112,10 @@ public class LinearRegression {
         for (i=0; i<solution.length; i++) {
             if (solution[i] != 0) {
                 if (i == 0) {
-                    outputString += String.format("%.2f", (solution[i]));
+                    outputString += String.format("%.3f", (solution[i]));
                 }
                 else {
-                    outputString += String.format("%.2f", Math.abs(solution[i]));
+                    outputString += String.format("%.3f", Math.abs(solution[i]));
                     outputString += " X" + (i);
                 }
                 
