@@ -16,6 +16,7 @@ public class LinearEquation {
 
             if (matrix.data[currentRow][j] != 0) {
                 matrix.divideRowByK(currentRow, matrix.data[currentRow][j]);
+                matrix.data[currentRow][j] = 1;
 
                 for (int i = currentRow + 1; i < matrix.nRows; i++) {
                     double[] rowArray = matrix.getRowAsArray(currentRow);
@@ -34,7 +35,9 @@ public class LinearEquation {
         return matrix;
     }
 
-    public static String[] solveRowEchelon(Matrix matrix) {
+    public static String[] solveRowEchelon(Matrix matrixIn) {
+        Matrix matrix = Matrix.copyMatrix(matrixIn);
+
         double[][] coefs = new double[matrix.nCols - 1][27];
         String[] res = new String[matrix.nCols - 1];
 

@@ -48,7 +48,6 @@ public class LinearEquationTest {
     }
 
     // TODO: Add handling for cramer and handling for no solutions
-    // TODO: Fix for gauss solve for Hilbert Matrix
     @Test
     void testElimination() throws IOException {
         double[][] sample1 = Util.readFromFile(new File("src/test/cases/linearequation/gauss-sample1.txt").getCanonicalPath());
