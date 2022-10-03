@@ -27,8 +27,8 @@ public class Inverse {
                 tempCopy.divideRowByK(currentRow, tempCopy.data[currentRow][j]);
 
                 for (i = currentRow + 1; i < tempCopy.nRows; i++) {
-                    float[] rowArray = tempCopy.getRowAsArray(currentRow);
-                    float[] rowIdentity = identity.getRowAsArray(currentRow);
+                    double[] rowArray = tempCopy.getRowAsArray(currentRow);
+                    double[] rowIdentity = identity.getRowAsArray(currentRow);
                     for (k = 0; k < tempCopy.nCols; k++) {
                         rowArray[k] *= tempCopy.data[i][j];
                         rowIdentity[k] *= tempCopy.data[i][j];
@@ -50,7 +50,7 @@ public class Inverse {
 
             if (tempCopy.data[i][colOfPivot] != 0) {
                 for (j = 0; j < i && tempCopy.data[j][colOfPivot] != 0; j++) {
-                    float ratio = tempCopy.data[j][colOfPivot] / tempCopy.data[i][colOfPivot];
+                    double ratio = tempCopy.data[j][colOfPivot] / tempCopy.data[i][colOfPivot];
                     // Operate Echelon matrix parallel with identity matrix
                     for (k = 0; k < tempCopy.nCols; k++) {
                         tempCopy.data[j][k] -= tempCopy.data[i][k] * ratio;
@@ -100,7 +100,7 @@ public class Inverse {
             }
         }
 
-        float mul = 1 / Determinant.cofactor(matrix);
+        double mul = 1 / Determinant.cofactor(matrix);
         Matrix transposeCofactor = Matrix.transpose(cofactorMatrix);
         for (int i = 0; i < transposeCofactor.getNRows(); i++) {
             transposeCofactor.multiplyRowByK(i, mul);

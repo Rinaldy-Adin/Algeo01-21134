@@ -3,8 +3,8 @@ package tubes.matrix;
 import tubes.util.Util;
 
 public class Determinant {
-    public static float rowReduction(Matrix matrix) {
-        float det = 1;
+    public static double rowReduction(Matrix matrix) {
+        double det = 1;
 
         int currentRow = 0;
         for (int j = 0; j < matrix.nCols && currentRow < matrix.nRows; j++) {
@@ -23,7 +23,7 @@ public class Determinant {
                 matrix.divideRowByK(currentRow, matrix.data[currentRow][j]);
 
                 for (int i = currentRow + 1; i < matrix.nRows; i++) {
-                    float[] rowArray = matrix.getRowAsArray(currentRow);
+                    double[] rowArray = matrix.getRowAsArray(currentRow);
                     for (int k = 0; k < matrix.nCols; k++) {
                         rowArray[k] *= matrix.data[i][j];
                     }
@@ -35,7 +35,7 @@ public class Determinant {
             }
         }
 
-        float[] diag = matrix.getDiagonalAsArray();
+        double[] diag = matrix.getDiagonalAsArray();
         if (Util.indexOfVal(diag, 0) != -1) {
             det = 0;
         }
@@ -43,13 +43,13 @@ public class Determinant {
         return det;
     }
 
-    public static float cofactor(Matrix matrix) {
+    public static double cofactor(Matrix matrix) {
       // Compute the determinant of a matrix using cofactor expansion method
 
       if(matrix.getNCols() == 2 && matrix.getNRows() == 2) {
         return matrix.data[0][0]*matrix.data[1][1] - matrix.data[0][1]*matrix.data[1][0];
       } else {
-        float determinant = 0.0f;
+        double determinant = 0.0f;
         for(int k = 0; k < matrix.getNRows(); k++) {
           Matrix minor = new Matrix(matrix.getNRows() - 1, matrix.getNCols() - 1);
 

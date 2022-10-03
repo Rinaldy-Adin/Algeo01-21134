@@ -13,7 +13,7 @@ public class BicubicInterpolation {
                 for (int i = 0; i < 4; i++) {
                     for (int j = 0; j < 4; j++) {
                         int col = j + i * 4;
-                        matrix.data[row][col] = (float) (Math.pow(x, i) * Math.pow(y, j));
+                        matrix.data[row][col] = (double) (Math.pow(x, i) * Math.pow(y, j));
                     }
                 }
             }
@@ -23,7 +23,7 @@ public class BicubicInterpolation {
     }
 
     public static Matrix solveCoefficient(Matrix values) {
-        float[] valuesArray = values.getMatrixAsOneDimensionalArray();
+        double[] valuesArray = values.getMatrixAsOneDimensionalArray();
         Matrix valuesMatrixOneRow = new Matrix(16, 1);
         for (int i = 0; i < 16; i++) {
             valuesMatrixOneRow.data[i][0] = valuesArray[i];
@@ -42,14 +42,14 @@ public class BicubicInterpolation {
         return coefMatrix;
     }
 
-    public static float interpolate(Matrix values, float x, float y) {
+    public static double interpolate(Matrix values, double x, double y) {
         if (x < 0 || x > 1 || y < 0 || y > 1) {
-            return Float.NaN;
+            return Double.NaN;
         }
 
         Matrix coefficient = solveCoefficient(values);
 
-        float result = 0;
+        double result = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 result += coefficient.data[i][j] * Math.pow(x, i) * Math.pow(y, j);

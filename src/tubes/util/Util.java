@@ -13,7 +13,7 @@ public class Util {
         return -1;
     }
 
-    public static int indexOfVal(float[] arr, float val) {
+    public static int indexOfVal(double[] arr, double val) {
         for (int i = 0;i < arr.length;i++) {
             if (arr[i] == val)
                 return i;
@@ -22,7 +22,7 @@ public class Util {
         return -1;
     }
 
-    public static float[][] readFromFile(String pathString) {
+    public static double[][] readFromFile(String pathString) {
       // Read data from a txt file and outputs it as a matrix
       // (The txt file must ends with newline character)
 
@@ -49,16 +49,16 @@ public class Util {
         }
       }
 
-      float[][] data = new float[rows][cols];
+      double[][] data = new double[rows][cols];
       String dataStr = "";
       int j = 0, k = 0;
       for(int i = 0; i < matrixString.length(); i++) {
         if(matrixString.charAt(i) == ' ') {
-          data[j][k] = Float.parseFloat(dataStr);
+          data[j][k] = Double.parseDouble(dataStr);
           k++;
           dataStr = "";
         } else if(matrixString.charAt(i) == '\n') {
-          data[j][k] = Float.parseFloat(dataStr);
+          data[j][k] = Double.parseDouble(dataStr);
           j++;
           k = 0;
           dataStr = "";

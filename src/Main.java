@@ -47,7 +47,7 @@ public class Main {
               matrix = new Matrix(n, m);
               for(int i = 0; i < matrix.getNRows(); i++) {
                 for(int j = 0; j < matrix.getNCols(); j++) {
-                  matrix.data[i][j] = scan.nextFloat();
+                  matrix.data[i][j] = scan.nextDouble();
                 }
               }
               scan.nextLine();
@@ -57,7 +57,7 @@ public class Main {
               scan.nextLine();
               String pathString = scan.nextLine();
 
-              float[][] data = Util.readFromFile(pathString);
+              double[][] data = Util.readFromFile(pathString);
               matrix = new Matrix(data);
             } else {
               matrix = new Matrix(0, 0);
@@ -139,7 +139,7 @@ public class Main {
               matrix = new Matrix(n, n);
               for(int i = 0; i < matrix.getNRows(); i++) {
                 for(int j = 0; j < matrix.getNCols(); j++) {
-                  matrix.data[i][j] = scan.nextFloat();
+                  matrix.data[i][j] = scan.nextDouble();
                 }
               }
               scan.nextLine();
@@ -148,13 +148,13 @@ public class Main {
               scan.nextLine();
               String pathString = scan.nextLine();
 
-              float[][] data = Util.readFromFile(pathString);
+              double[][] data = Util.readFromFile(pathString);
               matrix = new Matrix(data);
             } else {
               matrix = new Matrix(0, 0);
             }
 
-            float determinant = 0.0f;
+            double determinant = 0.0f;
             if(inputSub == 1) {
               determinant = Determinant.rowReduction(matrix);
             } else if(inputSub == 2) {
@@ -188,7 +188,7 @@ public class Main {
               matrix = new Matrix(n, n);
               for(int i = 0; i < matrix.getNRows(); i++) {
                 for(int j = 0; j < matrix.getNCols(); j++) {
-                  matrix.data[i][j] = scan.nextFloat();
+                  matrix.data[i][j] = scan.nextDouble();
                 }
               }
               scan.nextLine();
@@ -198,7 +198,7 @@ public class Main {
               scan.nextLine();
               String pathString = scan.nextLine();
 
-              float[][] data = Util.readFromFile(pathString);
+              double[][] data = Util.readFromFile(pathString);
               matrix = new Matrix(data);
             } else {
               matrix = new Matrix(0, 0);
@@ -226,7 +226,7 @@ public class Main {
               points = new Matrix(n, 2);
               for(int i = 0; i < points.getNRows(); i++) {
                 for(int j = 0; j < points.getNCols(); j++) {
-                  points.data[i][j] = scan.nextFloat();
+                  points.data[i][j] = scan.nextDouble();
                 }
               }
             } else if(inputMethod == 2) {
@@ -234,18 +234,18 @@ public class Main {
               scan.nextLine();
               String pathString = scan.nextLine();
 
-              float[][] data = Util.readFromFile(pathString);
+              double[][] data = Util.readFromFile(pathString);
               points = new Matrix(data);
             } else {
               points = new Matrix(0, 0);
             }
 
             System.out.print("Masukkan nilai x yang akan diaproksimasi: ");
-            float x = scan.nextFloat();
+            double x = scan.nextDouble();
             scan.nextLine();
 
             Matrix coefficients = Interpolation.polynomialInterpolation(points);
-            float approx = Interpolation.approximateFunction(points, x);
+            double approx = Interpolation.approximateFunction(points, x);
 
             String outputString = "f(x) = ";
             for(int i = 0; i < coefficients.getNRows(); i++) {
@@ -278,7 +278,7 @@ public class Main {
             scan.nextLine();
             String pathString = scan.nextLine();
 
-            float[][] data = Util.readFromFile(pathString);
+            double[][] data = Util.readFromFile(pathString);
             Matrix temp = new Matrix(data);
 
             Matrix matrix = new Matrix(temp.getNRows()-1, temp.getNCols());
@@ -288,10 +288,10 @@ public class Main {
               }
             }
 
-            float x = temp.data[temp.getNRows()-1][0];
-            float y = temp.data[temp.getNRows()-1][1];
+            double x = temp.data[temp.getNRows()-1][0];
+            double y = temp.data[temp.getNRows()-1][1];
 
-            float val = BicubicInterpolation.interpolate(matrix, x, y);
+            double val = BicubicInterpolation.interpolate(matrix, x, y);
             String outputString = "f(" + x + ", " + y + ") = " + val;
             
             System.out.print("Lokasi folder output: ");
@@ -333,7 +333,7 @@ public class Main {
 
               for (i=0; i<x.getNRows(); i++) {
                 for (j=0; j<x.getNCols(); j++) {
-                  x.data[i][j] = scan.nextFloat();
+                  x.data[i][j] = scan.nextDouble();
                 }
               }
 
@@ -346,7 +346,7 @@ public class Main {
 
               for (i=0; i<y.getNRows(); i++) {
                 for (j=0; j<y.getNCols(); j++) {
-                  y.data[i][j] = scan.nextFloat();
+                  y.data[i][j] = scan.nextDouble();
                 }
               }
 
@@ -355,7 +355,7 @@ public class Main {
               System.out.println();
 
               for (i=0; i<k.getNCols(); i++) {
-                k.data[0][i] = scan.nextFloat();
+                k.data[0][i] = scan.nextDouble();
               }
             }
             else if(inputMethod == 2) {
@@ -363,7 +363,7 @@ public class Main {
               scan.nextLine();
               String pathString = scan.nextLine();
               
-              float[][] data = Util.readFromFile(pathString);
+              double[][] data = Util.readFromFile(pathString);
               x = new Matrix(data.length-1, data[0].length-1);
               y = new Matrix(data.length-1, 1);
               k = new Matrix(0, data[0].length-1);

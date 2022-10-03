@@ -18,7 +18,7 @@ public class LinearEquation {
                 matrix.divideRowByK(currentRow, matrix.data[currentRow][j]);
 
                 for (int i = currentRow + 1; i < matrix.nRows; i++) {
-                    float[] rowArray = matrix.getRowAsArray(currentRow);
+                    double[] rowArray = matrix.getRowAsArray(currentRow);
                     for (int k = 0; k < matrix.nCols; k++) {
                         rowArray[k] *= matrix.data[i][j];
                     }
@@ -35,7 +35,7 @@ public class LinearEquation {
     }
 
     public static String[] solveRowEchelon(Matrix matrix) {
-        float[][] coefs = new float[matrix.nCols - 1][27];
+        double[][] coefs = new double[matrix.nCols - 1][27];
         String[] res = new String[matrix.nCols - 1];
 
         Arrays.fill(res, "");
@@ -65,7 +65,7 @@ public class LinearEquation {
                 }
 
                 if (matchingRow != i) {
-                    float currentCoef = coefs[i][j];
+                    double currentCoef = coefs[i][j];
                     coefs[i][j] = 0;
 
                     for (int l = 0; l < matrix.nCols; l++) {
@@ -142,7 +142,7 @@ public class LinearEquation {
                 // Operate every row above pivot with a non-zero element at the same column as pivot
                 for (j = 0; j < i; j++) {
                     if (matrix.data[j][colOfPivot] == 0) continue;
-                    float ratio = matrix.data[j][colOfPivot] / matrix.data[i][colOfPivot];
+                    double ratio = matrix.data[j][colOfPivot] / matrix.data[i][colOfPivot];
                     for (k = 0; k < matrix.nCols; k++) {
                         matrix.data[j][k] -= matrix.data[i][k] * ratio;
                     }
@@ -230,7 +230,7 @@ public class LinearEquation {
                 inputMatrix.data[i][j] = matrix.data[i][j];
             }
         }
-        float determinant = Determinant.rowReduction(inputMatrix);
+        double determinant = Determinant.rowReduction(inputMatrix);
 
         for (int k = 0; k < output.getNRows(); k++) {
             Matrix cramerMatrix = new Matrix(matrix.getNRows(), matrix.getNCols() - 1);
@@ -244,7 +244,7 @@ public class LinearEquation {
                     }
                 }
             }
-            float kDeterminant = Determinant.rowReduction(cramerMatrix);
+            double kDeterminant = Determinant.rowReduction(cramerMatrix);
             output.data[k][0] = kDeterminant / determinant;
         }
 

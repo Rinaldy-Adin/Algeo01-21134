@@ -1,17 +1,17 @@
 package tubes.matrix;
 
 public class Matrix {
-    public float[][] data;
+    public double[][] data;
     protected int nRows, nCols;
 
     public Matrix(int nRows, int nCols) {
         this.nRows = nRows;
         this.nCols = nCols;
 
-        this.data = new float[nRows][nCols];
+        this.data = new double[nRows][nCols];
     }
 
-    public Matrix(float[][] data) {
+    public Matrix(double[][] data) {
         this.data = data;
         this.nRows = data.length;
         this.nCols = data[0].length;
@@ -34,8 +34,8 @@ public class Matrix {
         }
     }
 
-    public float[] getRowAsArray(int R1) {
-        float[] arr = new float[nCols];
+    public double[] getRowAsArray(int R1) {
+        double[] arr = new double[nCols];
 
         for (int i = 0; i < nCols; i++) {
             arr[i] = this.data[R1][i];
@@ -44,8 +44,8 @@ public class Matrix {
         return arr;
     }
 
-    public float[] getColAsArray(int C1) {
-        float[] arr = new float[nRows];
+    public double[] getColAsArray(int C1) {
+        double[] arr = new double[nRows];
 
         for (int i = 0; i < nRows; i++) {
             arr[i] = this.data[i][C1];
@@ -54,8 +54,8 @@ public class Matrix {
         return arr;
     }
 
-    public float[] getDiagonalAsArray() {
-        float[] arr = new float[nCols];
+    public double[] getDiagonalAsArray() {
+        double[] arr = new double[nCols];
 
         for (int i = 0; i < nCols; i++) {
             arr[i] = this.data[i][i];
@@ -64,8 +64,8 @@ public class Matrix {
         return arr;
     }
 
-    public float[] getMatrixAsOneDimensionalArray() {
-        float[] arr = new float[nCols * nRows];
+    public double[] getMatrixAsOneDimensionalArray() {
+        double[] arr = new double[nCols * nRows];
 
         for (int i = 0; i < nRows; i++) {
             for (int j = 0; j < nCols; j++) {
@@ -80,7 +80,7 @@ public class Matrix {
         if (R1 >= nRows || R2 >= nRows || R1 == R2) return;
 
         for (int j = 0; j < nCols; j++) {
-            float tmp = data[R1][j];
+            double tmp = data[R1][j];
             data[R1][j] = data[R2][j];
             data[R2][j] = tmp;
         }
@@ -94,17 +94,17 @@ public class Matrix {
         }
     }
 
-    public void multiplyRowByK(int R1, float k) {
+    public void multiplyRowByK(int R1, double k) {
         for (int j = 0; j < nCols; j++) {
             data[R1][j] *= k;
         }
     }
 
-    public void divideRowByK(int R1, float k) {
-        multiplyRowByK(R1, (float) 1.0 / k);
+    public void divideRowByK(int R1, double k) {
+        multiplyRowByK(R1, (double) 1.0 / k);
     }
 
-    public void subtractRowByArray(int R1, float[] arr) {
+    public void subtractRowByArray(int R1, double[] arr) {
         for (int i = 0; i < arr.length && i < nCols; i++) {
             this.data[R1][i] -= arr[i];
         }
