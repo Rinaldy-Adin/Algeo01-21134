@@ -68,7 +68,6 @@ public class BicubicInterpolation {
         for (int j = 0; j < 4; j++) {
             for (int i = 0; i < 4; i++) {
                 coefficient.data[i][j] = col[i + j * 4];
-//                System.out.printf("a%d%d: %f\n", i, j, coefficient.data[i][j]);
             }
         }
 
@@ -77,7 +76,6 @@ public class BicubicInterpolation {
         for (int j = 0; j < 4; j++) {
             for (int i = 0; i < 4; i++) {
                 result += coefficient.data[i][j] * Math.pow(x, i) * Math.pow(y, j);
-//                System.out.printf("%f + %f ^ %d + %f ^ %d\n", coefficient.data[i][j], x, i, y, j);
             }
         }
 
