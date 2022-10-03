@@ -17,7 +17,9 @@ public class Main {
           System.out.println("5. Interpolasi bicubic");
           System.out.println("6. Regresi linier berganda");
           System.out.println("7. Keluar");
-
+          System.out.println();
+          
+          System.out.print("Input: ");
           int input = scan.nextInt();
           System.out.println();
 
@@ -29,11 +31,17 @@ public class Main {
             System.out.println("2. Metode eliminasi Gauss-Jordan");
             System.out.println("3. Metode matriks balikan");
             System.out.println("4. Kaidah Cramer");
+            
+            System.out.println();
+            System.out.print("Input: ");
             int inputSub = scan.nextInt();
             System.out.println();
 
             System.out.println("1. Masukkan melalui keyboard");
             System.out.println("2. Masukkan melalui file");
+
+            System.out.println();
+            System.out.print("Input: ");
             int inputMethod = scan.nextInt();
             System.out.println();
 
@@ -49,6 +57,7 @@ public class Main {
               int m = scan.nextInt();
               System.out.println();
               System.out.println("Masukkan matrix: ");
+              System.out.println();
 
               matrix = new Matrix(n, m);
               for(int i = 0; i < matrix.getNRows(); i++) {
@@ -159,20 +168,27 @@ public class Main {
             // Determinant
             System.out.println("1. Metode reduksi baris");
             System.out.println("2. Metode kofaktor");
+
+            System.out.println();
+            System.out.print("Input: ");
             int inputSub = scan.nextInt();
             System.out.println();
 
             System.out.println("1. Masukkan melalui keyboard");
             System.out.println("2. Masukkan melalui file");
+
+            System.out.println();
+            System.out.print("Input: ");
             int inputMethod = scan.nextInt();
             System.out.println();
 
             Matrix matrix;
             if(inputMethod == 1) {
-              System.out.print("Input ukuran matrix n*n: ");
+              System.out.print("Masukkan ukuran matrix n*n: ");
               int n = scan.nextInt();
               System.out.println();
               System.out.println("Masukkan matrix: ");
+              System.out.println();
 
               matrix = new Matrix(n, n);
               for(int i = 0; i < matrix.getNRows(); i++) {
@@ -199,6 +215,7 @@ public class Main {
             } else if(inputSub == 2) {
               determinant = Determinant.cofactor(matrix);
             }
+
             String outputString = "Determinan: " + determinant;
             System.out.println();
             System.out.print("Lokasi folder output: ");
@@ -217,11 +234,17 @@ public class Main {
             // Inverse
             System.out.println("1. Metode Gauss-Jordan");
             System.out.println("2. Metode Adjoin");
+
+            System.out.println();
+            System.out.print("Input: ");
             int inputSub = scan.nextInt();
             System.out.println();
 
             System.out.println("1. Masukkan melalui keyboard");
             System.out.println("2. Masukkan melalui file");
+
+            System.out.println();
+            System.out.print("Input: ");
             int inputMethod = scan.nextInt();
             System.out.println();
 
@@ -229,10 +252,11 @@ public class Main {
             String outputString = "";
 
             if (inputMethod == 1) {
-              System.out.print("Input ukuran matrix n*n: ");
+              System.out.print("Masukkan ukuran matrix n*n: ");
               int n = scan.nextInt();
               System.out.println();
               System.out.println("Masukkan matrix: ");
+              System.out.println();
               matrix = new Matrix(n, n);
               for(int i = 0; i < matrix.getNRows(); i++) {
                 for(int j = 0; j < matrix.getNCols(); j++) {
@@ -293,6 +317,9 @@ public class Main {
             // Interpolasi Polinom
             System.out.println("1. Masukkan melalui keyboard");
             System.out.println("2. Masukkan melalui file");
+
+            System.out.println();
+            System.out.print("Input: ");
             int inputMethod = scan.nextInt();
             System.out.println();
 
@@ -302,6 +329,7 @@ public class Main {
               int n = scan.nextInt();
               System.out.println();
               System.out.println("Masukkan titik: ");
+              System.out.println();
 
               points = new Matrix(n, 2);
               for(int i = 0; i < points.getNRows(); i++) {
@@ -359,7 +387,9 @@ public class Main {
             Util.writeToFile(folder, fileName, outputString);
             System.out.println(outputString);
             System.out.println();
-          } else if(input == 5) {
+          } 
+          
+          else if(input == 5) {
             // Bicubic Interpolation
             System.out.print("Lokasi file masukan: ");
             scan.nextLine();
@@ -392,31 +422,38 @@ public class Main {
             Util.writeToFile(folder, fileName, outputString);
             System.out.println(outputString);
             System.out.println();
-          } else if(input == 6) {
-            // Regresi Linear Berganda
+          } 
+          
+          else if(input == 6) {
+            // Multiple Linear Regression
             System.out.println("1. Masukkan melalui keyboard");
             System.out.println("2. Masukkan melalui file");
+
+            System.out.println();
+            System.out.print("Input: ");
             int inputMethod = scan.nextInt();
+            System.out.println();
 
             Matrix x;
             Matrix y;
             Matrix k;
+            String outputStringEq = "";
+            String outputStringApx = "";
+            String outputStringFile;
 
             if (inputMethod == 1) {
-              System.out.println("Masukkan jumlah peubah x: ");
+              System.out.print("Masukkan jumlah peubah x: ");
               int n = scan.nextInt();
-              System.out.println("Masukkan jumlah sampel: ");
+              System.out.println();
+              System.out.print("Masukkan jumlah sampel: ");
               int m = scan.nextInt();
+              System.out.println();
 
               x = new Matrix(m, n);
               y = new Matrix(m, 1);
               k = new Matrix(1, n);
 
-              System.out.println("Masukkan matriks X dengan format sebagai berikut: ");
-              System.out.println("[ [X1_1, X2_1, ... Xn_1]");
-              System.out.println("  [X1_2, X2_2, ... Xn_2]");
-              System.out.println("   ...   ...   ...  ...");
-              System.out.println("  [X1_m, X2_m, ... Xn_m] ]");
+              System.out.println("Masukkan matriks regressor (x): ");
               System.out.println();
 
               int i;
@@ -427,12 +464,9 @@ public class Main {
                   x.data[i][j] = scan.nextDouble();
                 }
               }
+              System.out.println();
 
-              System.out.println("Masukkan matriks Y dengan format sebagai berikut: ");
-              System.out.println("[ [Y1]");
-              System.out.println("  [Y2]");
-              System.out.println("  ...");
-              System.out.println("  [Ym] ]");
+              System.out.println("Masukkan matriks variabel dependen (y): ");
               System.out.println();
 
               for (i=0; i<y.getNRows(); i++) {
@@ -440,15 +474,17 @@ public class Main {
                   y.data[i][j] = scan.nextDouble();
                 }
               }
-
-              System.out.println("Masukkan nilai yang akan ditaksir dengan format sebagai berikut: ");
-              System.out.println("[[X1, X2, ... Xk]]");
               System.out.println();
 
+              System.out.println("Masukkan nilai yang akan ditaksir (Xk): ");
+              System.out.println();
+              
               for (i=0; i<k.getNCols(); i++) {
                 k.data[0][i] = scan.nextDouble();
               }
+              System.out.println();
             }
+
             else if(inputMethod == 2) {
               System.out.print("Lokasi file masukan: ");
               scan.nextLine();
@@ -458,7 +494,7 @@ public class Main {
               double[][] data = Util.readFromFile(pathString);
               x = new Matrix(data.length-1, data[0].length-1);
               y = new Matrix(data.length-1, 1);
-              k = new Matrix(0, data[0].length-1);
+              k = new Matrix(1, data[0].length-1);
 
               int i, j;
 
@@ -482,17 +518,45 @@ public class Main {
               k = new Matrix(0, 0);
             }
 
-            // Transpose x such that it follows the formatting in LinearRegression class
+            // Transpose x such that it follows the formatting needed in LinearRegression class
             Matrix transX = Matrix.transpose(x);
+            
+            // Fill in output string
+            outputStringEq += LinearRegression.writeMLREquation(transX, y);
+
+            int i;
+            outputStringApx += "f(";
+            for (i=1; i<=k.getNCols(); i++) {
+              outputStringApx += k.data[0][i-1];
+              if (i < k.getNCols()) {
+                outputStringApx += ", ";
+              }
+              else {
+                outputStringApx += ")";
+              }
+            }
+            outputStringApx += " = " + LinearRegression.approxMLR(transX, y, k);
+            
+            outputStringFile = outputStringEq + "\n" + outputStringApx;
+
+            System.out.println();
+            System.out.print("Lokasi folder output: ");
+            String folder = scan.nextLine();
+            System.out.println();
+            System.out.print("Nama file: ");
+            String fileName = scan.nextLine();
+            System.out.println();
+            Util.writeToFile(folder, fileName, outputStringFile);
+
             System.out.println("Persamaan regresi: ");
-            LinearRegression.writeMLREquation(transX, y);
+            System.out.println(outputStringEq);
             System.out.println();
             System.out.println("Hasil taksiran Xk: ");
-            System.out.println(LinearRegression.approxMLR(transX, y, k));
+            System.out.println(outputStringApx);
             System.out.println();
-
-
-          } else if(input == 7) {
+          } 
+          
+          else if(input == 7) {
             // Keluar
             isActive = false;
           }
