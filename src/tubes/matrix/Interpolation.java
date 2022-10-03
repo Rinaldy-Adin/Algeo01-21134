@@ -17,11 +17,14 @@ public class Interpolation {
     return LinearEquation.cramerRule(matrix);
   }
 
-  public static float approximateFunction(Matrix points) {
+  public static float approximateFunction(Matrix points, float x) {
+    // Approximate the value of function at x by taking several points as input
+    // and then approximate the function using polynomial interpolation method
+
     Matrix coefficients = polynomialInterpolation(points);
     float output = 0.0f;
     for(int i = 0; i < coefficients.getNRows(); i++) {
-      output += coefficients.data[i][0]*Math.pow(points.data[i][0], i);
+      output += coefficients.data[i][0]*Math.pow(x, i);
     }
     return output;
   }
