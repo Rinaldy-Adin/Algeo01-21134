@@ -36,9 +36,11 @@ gradle-app.setting
 ## IntelliJ
 ##############################
 out/
+src/*.class
 output/*.txt
 .idea/
 .idea_modules/
 *.iml
 *.ipr
 *.iws
+src/META-INF/**
